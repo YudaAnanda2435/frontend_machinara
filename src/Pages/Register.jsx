@@ -1,9 +1,9 @@
-import FormRegister from "../components/fragments/formRegister";
-import AuthLayouts from "../components/Layouts/authLayouts";
+// import FormRegister from "../components/fragments/formRegister";
+// import AuthLayouts from "../components/Layouts/authLayouts";
 // import { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 
-const RegisterPage = () => {
+// const RegisterPage = () => {
 //   const [isLoading, setIsLoading] = useState(true);
 //   const navigate = useNavigate();
 
@@ -19,11 +19,11 @@ const RegisterPage = () => {
 //   if (isLoading) {
 //     return null;
 //   }
-  return (
-    <AuthLayouts title={`Register`} type={`register`}>
-      <FormRegister />
-    </AuthLayouts>
-  );
-};
+//   return (
+//     <AuthLayouts title={`Register`} type={`register`}>
+//       <FormRegister />
+//     </AuthLayouts>
+//   );
+// };
 
-export default RegisterPage;
+// export default RegisterPage;
