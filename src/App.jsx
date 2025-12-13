@@ -12,7 +12,7 @@ import { LocaleProvider } from "./contexts/LocaleContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 // Impor Halaman
-import Home from "./pages/Home";
+import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import Ticketing from "./Pages/Ticketing";
