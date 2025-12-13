@@ -1,0 +1,215 @@
+/* Ini menargetkan 'div' wrapper yang dibuat oleh <ReactLenis>
+  dan membuatnya menjadi container scroll utama halaman.
+*/
+/* div[data-lenis-scroll-container] {
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+} */
+
+/* ... (CSS Anda yang lain) ... */
+
+/*
+  Class kustom untuk "ekor" (segitiga kecil) di pop-up chat.
+  Kita menggunakan pseudo-element ::after.
+*/
+.chat-popover-tail::after {
+  content: "";
+  position: absolute;
+
+  /* Posisikan di bawah, rata kanan (sesuai desain) */
+  bottom: -10px; /* (Tinggi border-top) */
+  right: 32px; /* (Sesuaikan agar pas di atas tombol trigger) */
+
+  /* Membuat segitiga dengan trik border */
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+
+  /* Warna segitiga (harus sama dengan bg-white pop-up) */
+  border-top: 10px solid #ffffff;
+
+  /* Menambahkan shadow agar terlihat menyatu */
+  filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.05));
+}
+
+/* From Uiverse.io by barisdogansutcu */
+.buttonAnimate {
+  border-radius: 13px;
+  cursor: pointer;
+  /* border: 0; */
+  background-color: #1c3347;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 0 8px;
+  /* letter-spacing: 1.5px; */
+  /* text-transform: uppercase; */
+  /* font-size: 15px; */
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+.buttonAnimate:hover {
+  letter-spacing: 1.5px;
+  background-color: #1c3347; /* tetap warna utama */
+  color: #fff;
+  box-shadow: rgba(28, 51, 71, 0.4) 0px 7px 20px 0px; /* shadow pakai primary */
+  transform: translateY(-2px);
+}
+
+.buttonAnimate:active {
+  letter-spacing: 2px;
+  background-color: #1c3347;
+  color: #fff;
+  box-shadow: rgba(28, 51, 71, 0.2) 0px 3px 10px 0px;
+  transform: translateY(2px);
+  transition: 80ms;
+}
+
+/* efek 2 */
+.buttonAnimate2 {
+  letter-spacing: 2px;
+  border-radius: 13px;
+  position: relative;
+  z-index: 1; /* penting */
+  /* box-shadow: 0 2px 10px rgba(28, 51, 71, 0.16), 0 3px 6px rgba(28, 51, 71, 0.2); */
+  color: #1c3347;
+  text-decoration: none;
+  transition: 0.3s ease all;
+  background: transparent;
+}
+
+.buttonAnimate2:before {
+  transition: 0.5s all ease;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  opacity: 0;
+  content: "";
+  background-color: #1c3347;
+  border-radius: 13px;
+  z-index: -1;
+}
+
+.buttonAnimate2:hover,
+.buttonAnimate2:focus {
+  color: white; /* cukup ini, tidak perlu !important */
+}
+
+.buttonAnimate2:hover:before,
+.buttonAnimate2:focus:before {
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+.buttonAnimate2:active {
+  transform: scale(0.9);
+}
+
+/* testimonial swiper */
+/* Target wrapper pagination kustom kita.
+  Kita buat 'relative' agar bisa menampung 'bullets'
+  yang mungkin di-generate Swiper.
+*/
+.testimonial-pagination {
+  position: relative;
+  display: flex;
+  gap: 8px; /* Jarak antar bullets */
+  align-items: center;
+}
+
+/* Ini adalah 'bullet' default Swiper.
+  Kita ubah dari lingkaran menjadi kotak.
+*/
+.testimonial-pagination .swiper-pagination-bullet {
+  width: 10px; /* Lebar kotak */
+  height: 10px; /* Tinggi kotak */
+  border-radius: 2px; /* Membuat sudutnya sedikit tumpul (sesuai gambar) */
+  background-color: white;
+  opacity: 0.5; /* Opacity untuk bullet yang tidak aktif */
+  transition: opacity 0.3s;
+
+  /* Reset style default Swiper jika perlu */
+  margin: 0 !important;
+}
+
+/* Ini adalah 'bullet' yang sedang aktif.
+  Kita buat opacity-nya 100%.
+*/
+.testimonial-pagination .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* Pastikan tombol navigasi kita tidak memiliki 
+  style aneh (seperti outline biru saat diklik)
+*/
+.testimonial-prev-arrow,
+.testimonial-next-arrow {
+  outline: none;
+}
+.testimonial-prev-arrow:focus,
+.testimonial-next-arrow:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: unset !important;
+}
+
+/* CATATAN: Style di bawah ini TIDAK AKAN TERPAKAI
+  selama 'loop={true}' diatur di Swiper JSX.
+*/
+
+/* Target tombol saat Swiper menambah class 'disabled' */
+.testimonial-prev-arrow.swiper-button-disabled,
+.testimonial-next-arrow.swiper-button-disabled {
+  cursor: not-allowed;
+}
+
+/* Target IKON (svg) DI DALAM tombol yang 'disabled'.
+  Ubah warnanya menjadi abu-abu.
+*/
+.testimonial-prev-arrow.swiper-button-disabled svg,
+.testimonial-next-arrow.swiper-button-disabled svg {
+  color: #6b7280; /* Ini adalah kode hex untuk Tailwind text-gray-500 */
+}
+
+/* box shadow */
+.boxShadow {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+}
+
+.shadow-bottom {
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+
+/* Sembunyikan scrollbar untuk Chrome, Safari, dan Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Sembunyikan scrollbar untuk IE, Edge, dan Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* scale footer */
+.up-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+/* 2. Tentukan perubahannya saat di-hover */
+.up-scale:hover {
+  transform: scale(1.15); /* Membesar 5% */
+}
+
+.profile-card__socials img {
+  transition: transform 0.2s ease-in-out;
+}
+.profile-card__socials img:hover {
+  transform: scale(1.15); /* Membesar 5% */
+}

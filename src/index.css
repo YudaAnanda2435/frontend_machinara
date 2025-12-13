@@ -1,0 +1,505 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+body {
+  font-family: "Space Grostesk", sans-serif;
+}
+
+@font-face {
+  font-family: "Space Grostesk";
+  src: url("./assets/font/SpaceGrotesk-VariableFont_wght.ttf")
+    format("truetype");
+}
+
+@theme {
+  --color-primary: #1c3347 !important;
+  --color-grey: #f3f3f3;
+  --font-grostesk: "Space Grostesk";
+  --font-roboto: "Roboto"
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold text-black;
+  }
+  p {
+    @apply text-black text-[14px] md:text-[18px] font-normal leading-[1.4];
+  }
+}
+
+@layer components {
+  .container-main {
+    @apply w-full max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 xl:px-[94px] bg-white;
+  }
+
+  /* --- AWAL KODE KARTU ANDA --- */
+
+  /* 1. Kontainer kartu utama */
+  .card-machine {
+    @apply flex flex-col md:flex-row h-full gap-8 min-h-[310px] justify-between p-[25px] lg:p-[50px] 
+           border border-primary rounded-[45px] w-full max-w-full lg:max-w-[600px] 
+
+           /* Latar belakang putih */
+           bg-white 
+           shadow-[0_5px_0_#191A23];
+  }
+
+  /* 2. Pembungkus konten di sisi kiri */
+  .card-machine__content {
+    @apply flex flex-row md:flex-col justify-between h-[-webkit-fill-available];
+    /* Catatan: h-full mungkin juga berfungsi, tergantung browser target */
+  }
+
+  /* 3. Pembungkus untuk dua baris judul */
+  .card-machine__title-wrapper {
+    @apply flex flex-col;
+    /* Anda bisa tambahkan 'gap-2' di sini jika ingin ada jarak antar judul */
+  }
+
+  /* 4. Judul "badge" itu sendiri */
+  .card-machine__title {
+    @apply px-[7px] py-0 text-[18px] md:text-[30px] rounded-[7px] w-fit;
+  }
+
+  /* 5. Pembungkus "Learn More" (ini adalah 'group') */
+  .card-machine__link {
+    @apply flex flex-row gap-[15px] cursor-pointer items-center;
+  }
+
+  /* 6. Ikon panah "Learn More" */
+  .card-machine__link-icon {
+    @apply group-hover:rotate-30 w-full max-w-7 lg:max-w-10 transform transition ease-in-out duration-300;
+  }
+
+  /* 7. Ilustrasi di sisi kanan (opsional, tapi praktik yang baik) */
+  .card-machine__illustration {
+    @apply max-w-48 lg:max-w-full
+    /* Tidak ada style di asli Anda, tapi Anda bisa menambahkannya di sini */
+    /* misalnya: @apply w-[150px] h-auto; */
+  }
+
+  /* Pembungkus untuk semua item accordion */
+  .accordion-wrapper {
+    @apply w-full flex flex-col gap-4 md:gap-[30px] mb-[100px] md:mb-[147px];
+  }
+
+  /* Style dasar untuk satu item (kotaknya) */
+  .accordion-item {
+    @apply shadow-[0_5px_0_#191A23] cursor-pointer w-full rounded-[30px] border border-black
+     px-4 py-4 md:px-[60px] md:py-[41px] 
+     /* SINKRONKAN Easing */
+     transition-all duration-300 ease-out;
+  }
+
+  .accordion-item-support {
+    @apply cursor-pointer w-full rounded-[10px] border border-[#CFCFCF]
+     px-4 py-4 md:px-[31px] md:py-[25px] 
+     /* SINKRONKAN Easing */
+     transition-all duration-300 ease-out;
+  }
+
+  /* Variasi saat item DITUTUP (sesuai gambar) */
+  .accordion-item--closed {
+    @apply bg-white border-gray-900;
+  }
+
+  /* Variasi saat item DIBUKA (sesuai gambar) */
+  .accordion-item--open {
+    @apply bg-primary border-primary;
+  }
+
+  /* Baris atas yang bisa diklik (Header) */
+  .accordion-item__header {
+    @apply flex flex-row justify-between items-center cursor-pointer;
+  }
+
+  /* Pembungkus untuk "01" dan "Consultation" */
+  .accordion-item__trigger {
+    @apply flex flex-row gap-[15px] md:gap-[25px] items-center;
+  }
+
+  /* Styling untuk Angka ("01", "02") */
+  .accordion-item__number {
+    @apply text-[24px] md:text-5xl font-bold
+     /* SINKRONKAN Easing */
+     transition-colors duration-300 ease-out;
+  }
+
+  /* Styling untuk Judul ("Consultation") */
+  .accordion-item__title {
+    @apply text-[16px] md:text-2xl font-bold
+     /* SINKRONKAN Easing */
+     transition-colors duration-300 ease-out;
+  }
+
+  /* Pembungkus ikon lingkaran di kanan */
+  .accordion-item__icon-wrapper {
+    @apply w-9 h-9 md:w-11 md:h-11 shrink-0 
+     rounded-full border flex items-center justify-center 
+     /* SINKRONKAN Easing */
+     transition-all duration-300 ease-out;
+  }
+
+  .accordion-item__icon-wrapper-support {
+    @apply w-9 h-9 md:w-11 md:h-11 shrink-0 
+     rounded-full  flex items-center justify-center 
+     /* SINKRONKAN Easing */
+     transition-all duration-300 ease-out;
+  }
+
+  /* Container ikon '+' */
+  .accordion-icon {
+    @apply w-[18px] h-[18px] md:w-[25px] md:h-[25px] mb-[3px] relative ;
+  }
+
+  /* Ini adalah style untuk KEDUA 'bar' (horizontal & vertikal) */
+  .accordion-icon__bar {
+    @apply absolute top-1/2 left-0 w-full h-1
+     /* SINKRONKAN Easing */
+     transition-all duration-300 ease-out;
+  }
+
+  /* Bar pertama (horizontal) */
+  .accordion-icon__bar:first-child {
+  }
+
+  /* Bar kedua (vertikal) */
+  .accordion-icon__bar:last-child {
+    @apply rotate-90; /* Ini membuatnya jadi '+' */
+  }
+
+  /* 1. Style panel (Grid Container) saat TERTUTUP */
+  .accordion-item__panel {
+    @apply grid grid-rows-[0fr] opacity-0 
+     /* Transisi untuk grid-rows dan opacity */
+     transition-all duration-300 ease-out;
+  }
+
+  /* 2. Style panel saat TERBUKA */
+  .accordion-item--open .accordion-item__panel {
+    @apply grid-rows-[1fr] opacity-100;
+  }
+
+  /* 3. Wrapper konten BARU (Grid Item) */
+  .accordion-item__panel-content {
+    @apply overflow-hidden;
+  }
+
+  /* --- AKHIR PERUBAHAN KE GRID --- */
+
+  /* Beri transisi warna pada paragraf di dalam panel */
+  .accordion-item__panel p {
+    @apply transition-colors duration-300 ease-out;
+    /* Padding kita letakkan di sini agar ikut ter-animasi */
+    @apply pt-6 md:pt-[30px];
+  }
+
+  /* --- Kustomisasi Warna Berdasarkan State (Tidak Berubah) --- */
+
+  /* Saat DIBUKA: semua teks di dalam jadi putih */
+  .accordion-item--open .accordion-item__number,
+  .accordion-item--open .accordion-item__title,
+  .accordion-item--open p {
+    @apply text-white;
+  }
+  .accordion-item--open .accordion-item__icon-wrapper {
+    @apply border-white;
+  }
+  .accordion-item--open .accordion-icon__bar {
+    @apply bg-white;
+  }
+  .accordion-item--open .accordion-icon__bar:last-child {
+    @apply rotate-0; /* Animasi '-' */
+  }
+
+  /* Saat DITUTUP: semua teks kembali ke warna base */
+  .accordion-item--closed .accordion-item__number,
+  .accordion-item--closed .accordion-item__title,
+  .accordion-item--closed p {
+    @apply text-black;
+  }
+  .accordion-item--closed .accordion-item__icon-wrapper {
+    @apply border-gray-400;
+  }
+  .accordion-item--closed .accordion-icon__bar {
+    @apply bg-gray-900;
+  }
+
+  /* accordion support */
+  /* --- ACCORDION KHUSUS SUPPORT PAGE --- */
+
+/* 1. Item Container (Kotak Luar) */
+
+  .accordion-wrapper-support {
+    @apply w-full flex flex-col gap-4;
+  }
+.accordion-item-support {
+  @apply w-full cursor-pointer overflow-hidden
+    border border-gray-200 rounded-xl bg-white
+    px-6 py-5
+    transition-all duration-300 ease-out;
+}
+
+/* Efek Hover (Opsional, agar lebih interaktif) */
+.accordion-item-support:hover {
+  @apply border-gray-300 shadow-sm;
+}
+
+/* State Terbuka (Open) */
+.accordion-item-support--open {
+  /* Di desain Support, warnanya tetap putih, tidak jadi hijau/biru blok */
+  @apply bg-white border-gray-300 shadow-md; 
+}
+
+/* State Tertutup (Closed) */
+.accordion-item-support--closed {
+  @apply bg-white;
+}
+
+/* 2. Header (Baris Atas) */
+.accordion-item-support__header {
+  @apply flex flex-row justify-between items-start gap-4;
+}
+
+.accordion-item-support__trigger {
+  @apply flex-1;
+}
+
+/* Judul Pertanyaan */
+.accordion-item-support__title {
+  @apply text-[18px] font-bold text-gray-900 leading-snug;
+}
+
+/* 3. Wrapper Ikon (+/-) */
+.accordion-item-support__icon-wrapper {
+  @apply w-6 h-6 shrink-0 relative flex items-center justify-center mt-1;
+}
+
+/* Kita gunakan ulang class .accordion-icon dasar, tapi kita override warnanya */
+.accordion-item-support .accordion-icon__bar {
+  @apply bg-black absolute top-1/2 left-0 w-full h-0.5 transition-transform duration-300 ease-out;
+}
+
+/* Bar Vertikal (untuk membuat tanda +) */
+.accordion-item-support .accordion-icon__bar:last-child {
+  @apply rotate-90;
+}
+
+/* Saat Terbuka: Putar bar vertikal jadi datar (tanda -) */
+.accordion-item-support--open .accordion-icon__bar:last-child {
+  @apply rotate-0;
+}
+
+/* 4. Panel Konten (Animasi Buka Tutup) */
+.accordion-item-support__panel {
+  @apply grid grid-rows-[0fr] opacity-0 
+    transition-all duration-300 ease-out;
+}
+
+.accordion-item-support--open .accordion-item-support__panel {
+  @apply grid-rows-[1fr] opacity-100 mt-3; /* Tambah margin top saat buka */
+}
+
+/* Isi Konten Text */
+.accordion-item-support__panel-content {
+  @apply overflow-hidden text-gray-600 text-[16px] leading-relaxed;
+}
+
+  /* card profile name */
+  .profile-card {
+    @apply  shadow-[0_5px_0_#191A23] flex flex-col gap-7 px-6 py-7 w-full md:px-[35px] md:py-10 border border-gray-950 rounded-[45px];
+  }
+  .profile-card__header {
+    @apply flex flex-row w-full justify-between;
+  }
+  .profile-card__info {
+    @apply flex flex-col gap-1.5 justify-between;
+  }
+  .profile-card__socials {
+    @apply flex flex-row gap-2.5 justify-end;
+  }
+  .profile-card__meta {
+    @apply relative right-0 md:right-5;
+  }
+  .profile-card__name {
+    @apply text-[16px] md:text-[20px] font-medium text-black;
+  }
+  .profile-card__title {
+    @apply text-[14px] md:text-[18px] font-normal;
+  }
+  .profile-card__divider {
+    @apply w-full h-px bg-black;
+  }
+  .profile-card__avatar {
+    @apply  w-full max-w-20 md:max-w-full md:w-auto
+  }
+  .profile-card__description {
+  }
+
+  /* card ai */
+  .card-ai{
+    @apply flex flex-row gap-10 items-center w-full py-2 px-2.5 rounded-[10px] border border-[#798AA3];
+  }
+
+  .ask-content{
+    @apply text-[14px];
+  }
+
+  /* testimonials */
+  .testimonial-bubble {
+  @apply relative p-6 sm:p-[50px] border rounded-[45px] border-[#8C90FF] w-full max-w-[606px];
+}
+
+/* * 2. Segitiga LUAR (Border) - DI BAWAH */
+.testimonial-bubble::before {
+  content: "";
+  @apply absolute w-0 h-0 z-0;
+
+  /* Posisi: 80px dari kiri, dan -16px di BAWAH */
+  @apply left-20 -bottom-4;
+
+  /* Bentuk Segitiga (16px) menghadap ke BAWAH */
+  @apply border-l-16 border-l-transparent;
+  @apply border-r-16 border-r-transparent;
+  @apply border-t-16 border-t-[#8C90FF];
+}
+
+/* * 3. Segitiga DALAM (Background) - DI BAWAH */
+.testimonial-bubble::after {
+  content: "";
+  @apply absolute w-0 h-0 z-10;
+
+  /* Posisi: 2px lebih ke kanan dan 2px lebih ke atas dari ::before */
+  @apply left-[82px] bottom-[-13.3px];
+
+  /* Bentuk Segitiga (14px, lebih kecil dari border) menghadap ke BAWAH */
+  @apply border-l-14 border-l-transparent;
+  @apply border-r-14 border-r-transparent;
+  @apply border-t-14 border-t-[#191A23];
+}
+
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  /* --color-primary: var(--primary); */
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
