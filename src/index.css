@@ -40,14 +40,12 @@ body {
     @apply w-full max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 xl:px-[94px] bg-white;
   }
 
-  /* --- AWAL KODE KARTU ANDA --- */
 
   /* 1. Kontainer kartu utama */
   .card-machine {
     @apply flex flex-col md:flex-row h-full gap-8 min-h-[310px] justify-between p-[25px] lg:p-[50px] 
            border border-primary rounded-[45px] w-full max-w-full lg:max-w-[600px] 
 
-           /* Latar belakang putih */
            bg-white 
            shadow-[0_5px_0_#191A23];
   }
@@ -55,13 +53,11 @@ body {
   /* 2. Pembungkus konten di sisi kiri */
   .card-machine__content {
     @apply flex flex-row md:flex-col justify-between h-[-webkit-fill-available];
-    /* Catatan: h-full mungkin juga berfungsi, tergantung browser target */
   }
 
   /* 3. Pembungkus untuk dua baris judul */
   .card-machine__title-wrapper {
     @apply flex flex-col;
-    /* Anda bisa tambahkan 'gap-2' di sini jika ingin ada jarak antar judul */
   }
 
   /* 4. Judul "badge" itu sendiri */
@@ -82,8 +78,6 @@ body {
   /* 7. Ilustrasi di sisi kanan (opsional, tapi praktik yang baik) */
   .card-machine__illustration {
     @apply max-w-48 lg:max-w-full
-    /* Tidak ada style di asli Anda, tapi Anda bisa menambahkannya di sini */
-    /* misalnya: @apply w-[150px] h-auto; */
   }
 
   /* Pembungkus untuk semua item accordion */
@@ -95,33 +89,27 @@ body {
   .accordion-item {
     @apply shadow-[0_5px_0_#191A23] cursor-pointer w-full rounded-[30px] border border-black
      px-4 py-4 md:px-[60px] md:py-[41px] 
-     /* SINKRONKAN Easing */
      transition-all duration-300 ease-out;
   }
 
   .accordion-item-support {
     @apply cursor-pointer w-full rounded-[10px] border border-[#CFCFCF]
      px-4 py-4 md:px-[31px] md:py-[25px] 
-     /* SINKRONKAN Easing */
      transition-all duration-300 ease-out;
   }
 
-  /* Variasi saat item DITUTUP (sesuai gambar) */
   .accordion-item--closed {
     @apply bg-white border-gray-900;
   }
 
-  /* Variasi saat item DIBUKA (sesuai gambar) */
   .accordion-item--open {
     @apply bg-primary border-primary;
   }
 
-  /* Baris atas yang bisa diklik (Header) */
   .accordion-item__header {
     @apply flex flex-row justify-between items-center cursor-pointer;
   }
 
-  /* Pembungkus untuk "01" dan "Consultation" */
   .accordion-item__trigger {
     @apply flex flex-row gap-[15px] md:gap-[25px] items-center;
   }
@@ -129,14 +117,12 @@ body {
   /* Styling untuk Angka ("01", "02") */
   .accordion-item__number {
     @apply text-[24px] md:text-5xl font-bold
-     /* SINKRONKAN Easing */
      transition-colors duration-300 ease-out;
   }
 
   /* Styling untuk Judul ("Consultation") */
   .accordion-item__title {
     @apply text-[16px] md:text-2xl font-bold
-     /* SINKRONKAN Easing */
      transition-colors duration-300 ease-out;
   }
 
@@ -144,14 +130,13 @@ body {
   .accordion-item__icon-wrapper {
     @apply w-9 h-9 md:w-11 md:h-11 shrink-0 
      rounded-full border flex items-center justify-center 
-     /* SINKRONKAN Easing */
      transition-all duration-300 ease-out;
   }
 
   .accordion-item__icon-wrapper-support {
     @apply w-9 h-9 md:w-11 md:h-11 shrink-0 
      rounded-full  flex items-center justify-center 
-     /* SINKRONKAN Easing */
+    
      transition-all duration-300 ease-out;
   }
 
@@ -163,7 +148,7 @@ body {
   /* Ini adalah style untuk KEDUA 'bar' (horizontal & vertikal) */
   .accordion-icon__bar {
     @apply absolute top-1/2 left-0 w-full h-1
-     /* SINKRONKAN Easing */
+    
      transition-all duration-300 ease-out;
   }
 
@@ -173,13 +158,12 @@ body {
 
   /* Bar kedua (vertikal) */
   .accordion-icon__bar:last-child {
-    @apply rotate-90; /* Ini membuatnya jadi '+' */
+    @apply rotate-90; 
   }
 
   /* 1. Style panel (Grid Container) saat TERTUTUP */
   .accordion-item__panel {
     @apply grid grid-rows-[0fr] opacity-0 
-     /* Transisi untuk grid-rows dan opacity */
      transition-all duration-300 ease-out;
   }
 
@@ -198,7 +182,6 @@ body {
   /* Beri transisi warna pada paragraf di dalam panel */
   .accordion-item__panel p {
     @apply transition-colors duration-300 ease-out;
-    /* Padding kita letakkan di sini agar ikut ter-animasi */
     @apply pt-6 md:pt-[30px];
   }
 
@@ -234,8 +217,6 @@ body {
   }
 
   /* accordion support */
-  /* --- ACCORDION KHUSUS SUPPORT PAGE --- */
-
 /* 1. Item Container (Kotak Luar) */
 
   .accordion-wrapper-support {
@@ -255,7 +236,6 @@ body {
 
 /* State Terbuka (Open) */
 .accordion-item-support--open {
-  /* Di desain Support, warnanya tetap putih, tidak jadi hijau/biru blok */
   @apply bg-white border-gray-300 shadow-md; 
 }
 
@@ -305,7 +285,7 @@ body {
 }
 
 .accordion-item-support--open .accordion-item-support__panel {
-  @apply grid-rows-[1fr] opacity-100 mt-3; /* Tambah margin top saat buka */
+  @apply grid-rows-[1fr] opacity-100 mt-3; 
 }
 
 /* Isi Konten Text */
@@ -358,7 +338,6 @@ body {
   @apply relative p-6 sm:p-[50px] border rounded-[45px] border-[#8C90FF] w-full max-w-[606px];
 }
 
-/* * 2. Segitiga LUAR (Border) - DI BAWAH */
 .testimonial-bubble::before {
   content: "";
   @apply absolute w-0 h-0 z-0;
@@ -372,7 +351,6 @@ body {
   @apply border-t-16 border-t-[#8C90FF];
 }
 
-/* * 3. Segitiga DALAM (Background) - DI BAWAH */
 .testimonial-bubble::after {
   content: "";
   @apply absolute w-0 h-0 z-10;

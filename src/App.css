@@ -95,7 +95,7 @@
 
 .buttonAnimate2:hover,
 .buttonAnimate2:focus {
-  color: white; /* cukup ini, tidak perlu !important */
+  color: white; 
 }
 
 .buttonAnimate2:hover:before,
@@ -120,31 +120,19 @@
   align-items: center;
 }
 
-/* Ini adalah 'bullet' default Swiper.
-  Kita ubah dari lingkaran menjadi kotak.
-*/
 .testimonial-pagination .swiper-pagination-bullet {
-  width: 10px; /* Lebar kotak */
-  height: 10px; /* Tinggi kotak */
-  border-radius: 2px; /* Membuat sudutnya sedikit tumpul (sesuai gambar) */
+  width: 10px; 
+  height: 10px;
+  border-radius: 2px;
   background-color: white;
-  opacity: 0.5; /* Opacity untuk bullet yang tidak aktif */
+  opacity: 0.5; 
   transition: opacity 0.3s;
-
-  /* Reset style default Swiper jika perlu */
   margin: 0 !important;
 }
 
-/* Ini adalah 'bullet' yang sedang aktif.
-  Kita buat opacity-nya 100%.
-*/
 .testimonial-pagination .swiper-pagination-bullet-active {
   opacity: 1;
 }
-
-/* Pastikan tombol navigasi kita tidak memiliki 
-  style aneh (seperti outline biru saat diklik)
-*/
 .testimonial-prev-arrow,
 .testimonial-next-arrow {
   outline: none;
@@ -159,22 +147,15 @@
   bottom: unset !important;
 }
 
-/* CATATAN: Style di bawah ini TIDAK AKAN TERPAKAI
-  selama 'loop={true}' diatur di Swiper JSX.
-*/
-
 /* Target tombol saat Swiper menambah class 'disabled' */
 .testimonial-prev-arrow.swiper-button-disabled,
 .testimonial-next-arrow.swiper-button-disabled {
   cursor: not-allowed;
 }
 
-/* Target IKON (svg) DI DALAM tombol yang 'disabled'.
-  Ubah warnanya menjadi abu-abu.
-*/
 .testimonial-prev-arrow.swiper-button-disabled svg,
 .testimonial-next-arrow.swiper-button-disabled svg {
-  color: #6b7280; /* Ini adalah kode hex untuk Tailwind text-gray-500 */
+  color: #6b7280; 
 }
 
 /* box shadow */
@@ -186,15 +167,14 @@
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 
-/* Sembunyikan scrollbar untuk Chrome, Safari, dan Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
 /* Sembunyikan scrollbar untuk IE, Edge, dan Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 
 /* scale footer */
@@ -204,12 +184,12 @@
 
 /* 2. Tentukan perubahannya saat di-hover */
 .up-scale:hover {
-  transform: scale(1.15); /* Membesar 5% */
+  transform: scale(1.15); 
 }
 
 .profile-card__socials img {
   transition: transform 0.2s ease-in-out;
 }
 .profile-card__socials img:hover {
-  transform: scale(1.15); /* Membesar 5% */
+  transform: scale(1.15);
 }
