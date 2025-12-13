@@ -6,26 +6,21 @@ import { useLocation } from "react-router-dom";
 import LocaleContext from "../../contexts/LocaleContext";
 import content from "../../utils/content";
 
-// 1. HAPUS 'onLogout' dari props karena AppLayout adalah SUMBER logikanya
 const AppLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  // --- 2. FUNGSI LOGOUT (SUMBER LOGIKA) ---
   const handleLogout = () => {
     // Hapus data autentikasi
     localStorage.removeItem("token");
     localStorage.removeItem("user_data");
 
-    // Redirect paksa ke halaman login
     window.location.href = "/login";
   };
 
   const location = useLocation();
   const { locale } = useContext(LocaleContext);
 
-  // --- 3. LOGIKA JUDUL HALAMAN DINAMIS ---
   const pageTitle = useMemo(() => {
-    const path = location.pathname.toLowerCase(); // Ubah ke huruf kecil biar aman
+    const path = location.pathname.toLowerCase(); 
 
     if (path.startsWith("/ticketing")) return content.addTicket[locale];
 
@@ -43,7 +38,7 @@ const AppLayout = ({ children }) => {
       case "/settings":
         return content.settings[locale];
       case "/admin":
-        return "Admin Page"; // Tambahan jika perlu
+        return "Admin Page"; 
       default:
         return "Dashboard";
     }
@@ -59,7 +54,6 @@ const AppLayout = ({ children }) => {
 
   return (
     <div className="relative w-full max-w-[1960px] mx-auto font-roboto h-screen md:flex">
-      {/* Overlay Mobile */}
       {isSidebarOpen && (
         <div
           onClick={closeSidebar}
@@ -67,18 +61,16 @@ const AppLayout = ({ children }) => {
         ></div>
       )}
 
-      {/* --- 4. OPER 'handleLogout' KE SIDEBAR --- */}
       <Sidebar
-        onLogout={handleLogout} // <--- PAKAI handleLogout DISINI
+        onLogout={handleLogout} 
         isSidebarOpen={isSidebarOpen}
         closeSidebar={closeSidebar}
       />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* --- 5. OPER 'handleLogout' KE NAVBAR --- */}
         <DashboardNavbar
           onToggleSidebar={toggleSidebar}
-          onLogout={handleLogout} // <--- PAKAI handleLogout DISINI
+          onLogout={handleLogout} 
           title={pageTitle}
         />
 

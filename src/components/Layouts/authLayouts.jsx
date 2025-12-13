@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import AuthBg from "../../assets/img/excavator.jpg";
 import Logo from "/logo.svg";
 

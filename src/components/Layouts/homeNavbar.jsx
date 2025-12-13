@@ -1,12 +1,9 @@
 import { useState } from "react";
-// 1. Pastikan import Link dari react-router-dom
 import { Link, useNavigate } from "react-router-dom";
 
 // --- Import Elements ---
 import Buttons from "../elements/button";
 import AnimatedHamburgerIcon from "../elements/hamburger/AnimatedHamburgerIcon";
-
-// --- Import Assets & Data ---
 import Logo from "/logo.svg";
 import { navLinks } from "../../data/navigation";
 
@@ -22,9 +19,8 @@ const HomeNavbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // --- FUNGSI 1: Khusus untuk Scroll di halaman yang sama (Anchor Links) ---
   const handleScrollToSection = (e, href) => {
-    e.preventDefault(); // Cegah reload/pindah halaman
+    e.preventDefault(); 
     closeMobileMenu();
 
     const targetId = href.substring(1);
@@ -36,12 +32,8 @@ const HomeNavbar = () => {
         block: "start",
       });
     } else {
-      // Opsional: Jika elemen tidak ada (misal kita di halaman lain),
-      // pindah ke home dulu
       if (window.location.pathname !== "/") {
         navigate("/");
-        // Logic scroll setelah navigasi agak kompleks,
-        // tapi untuk sekarang cukup navigate ke home
       }
     }
   };
@@ -49,7 +41,6 @@ const HomeNavbar = () => {
   return (
     <>
       <nav className="container-main mb-[50px] z-10 sticky top-0  flex flex-row justify-between items-center py-4 bg-white/80 backdrop-blur-sm">
-        {/* --- Logo --- */}
         <Link
           to="/"
           aria-label="Beranda"
@@ -65,7 +56,6 @@ const HomeNavbar = () => {
         <ul className="hidden md:flex flex-row w-full justify-end items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.title}>
-              {/* Cek apakah link adalah anchor (#) atau halaman internal (/) */}
               {link.href.startsWith("#") ? (
                 <a
                   href={link.href}
@@ -84,23 +74,16 @@ const HomeNavbar = () => {
               )}
             </li>
           ))}
-
-          {/* --- TOMBOL LOGIN (DIPERBAIKI) --- */}
           <li>
-            {/* Gunakan <Link> biasa tanpa preventDefault.
-                Ini akan otomatis redirect ke /login 
-            */}
             <Link to="/login">
               <Buttons
                 className="text-black buttonAnimate2"
                 background="bg-transparent"
-                text="Request a quote" // Atau "Login"
+                text="Request a quote" 
               />
             </Link>
           </li>
         </ul>
-
-        {/* --- Tombol Hamburger --- */}
         <div className="md:hidden z-50">
           <button
             onClick={toggleMobileMenu}
@@ -111,8 +94,6 @@ const HomeNavbar = () => {
           </button>
         </div>
       </nav>
-
-      {/* --- Menu Mobile --- */}
       <div
         className={`
           fixed top-0 left-0 h-screen w-full bg-white shadow-xl z-40
@@ -144,12 +125,10 @@ const HomeNavbar = () => {
                 )}
               </li>
             ))}
-
-            {/* Tombol Login Mobile */}
             <li className="mt-4">
               <Link
                 to="/login"
-                onClick={closeMobileMenu} // Hanya perlu menutup menu
+                onClick={closeMobileMenu} 
               >
                 <Buttons
                   className="text-black w-full text-left"
@@ -162,7 +141,6 @@ const HomeNavbar = () => {
         </div>
       </div>
 
-      {/* --- Overlay --- */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-30 md:hidden"

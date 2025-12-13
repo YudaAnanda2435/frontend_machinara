@@ -7,19 +7,17 @@ import Logo from "/logo-dashboard.png";
 import Dashboard from "/Dashboard-icon.svg";
 import Ticket from "/ticket-icon.svg";
 import Support from "/support-icon.svg";
-import ChartLine from "/Chart_Line.svg"; // Predict icon
+import ChartLine from "/Chart_Line.svg";
 import ChatAi from "/chat-sidebar-icon.svg";
 import Settings from "/settings-icon.svg";
 import Logout from "/logout-icon.svg";
-
-// Impor Icon Active (Tambahkan icon lain di sini nanti jika sudah ada file-nya)
 import DashboardActive from "/Dashboard-icon-active.svg";
 import TicketActive from "/ticket-icon-active.svg";
 import ChartLineActive from "/Chart_Line_active.svg";
 import ChatAiActive from "/chat-sidebar-icon-active.svg";
 import SupportActive from "/support-icon-active.svg";
 import SettingsActive from "/settings-icon-active.svg";
-// import LogoutActive from "/logout-icon-active.svg";
+
 
 import NavigationItem from "../elements/navigation/navigationItem";
 import LocaleContext from "../../contexts/LocaleContext";
@@ -34,14 +32,14 @@ const Sidebar = ({ isSidebarOpen, closeSidebar, onLogout }) => {
       to: "/dashboard",
       text: content.dashboard[locale],
       icon: Dashboard,
-      activeIcon: DashboardActive, // <--- Tambahkan ini
+      activeIcon: DashboardActive,
     },
     {
       id: "ticketing",
       to: "/ticketing",
       text: content.addTicket[locale],
       icon: Ticket,
-      activeIcon: TicketActive, // <-- Import dan pasang di sini nanti
+      activeIcon: TicketActive, 
     },
     {
       id: "predict",
@@ -115,9 +113,6 @@ const Sidebar = ({ isSidebarOpen, closeSidebar, onLogout }) => {
             >
               {({ isActive }) => (
                 <NavigationItem
-                  // LOGIKA UTAMA DI SINI:
-                  // Jika active DAN item punya activeIcon -> pakai activeIcon
-                  // Jika tidak -> pakai icon biasa
                   icon={
                     isActive && item.activeIcon ? item.activeIcon : item.icon
                   }
@@ -129,7 +124,6 @@ const Sidebar = ({ isSidebarOpen, closeSidebar, onLogout }) => {
           </li>
         ))}
 
-        {/* Tombol Logout (Selalu di bawah) */}
         <li className="mt-auto mb-6">
           <button
             onClick={() => {

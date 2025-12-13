@@ -11,8 +11,6 @@ import {
   Activity,
 } from "lucide-react";
 
-// --- KONFIGURASI API ---
-// Mengambil status Critical DAN Warning
 const ML_API_URL =
   "https://machinelearning-production-344f.up.railway.app/dashboard/machines?status=Critical&status=Warning";
 
@@ -45,12 +43,8 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
       console.error("Gagal load user:", error);
     }
   }, []);
-
-  // 2. Fetch Notifications (Realtime Poll)
   useEffect(() => {
     fetchCriticalMachines();
-
-    // Auto refresh setiap 30 detik agar lebih responsif
     const interval = setInterval(fetchCriticalMachines, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -68,7 +62,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
 
   // --- LOGIC FETCH & SMART SORTING ---
   const fetchCriticalMachines = async () => {
-    // Jangan set loading true jika ini auto-refresh background (agar tidak kedip)
     if (notifications.length === 0) setIsLoadingNotif(true);
 
     try {
@@ -78,23 +71,19 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
       const data = await response.json();
       const machineList = Array.isArray(data) ? data : [];
 
-      // TRANSFORMASI DATA
       const mappedNotifs = machineList.map((machine) => ({
         id: machine.product_id,
         title: `${machine.status} Alert: ${machine.product_id}`,
-        status: machine.status, // "Critical" atau "Warning"
+        status: machine.status, 
         health: machine.health_score,
         date: machine.last_maintenance,
         message: `Health Score is critical at ${machine.health_score}%. Immediate check required.`,
       }));
 
-      // SORTING PRIORITAS:
-      // 1. Status "Critical" harus paling atas
-      // 2. Jika status sama, urutkan berdasarkan Health Score terendah (Paling rusak)
       const sortedNotifs = mappedNotifs.sort((a, b) => {
         if (a.status === "Critical" && b.status !== "Critical") return -1;
         if (b.status === "Critical" && a.status !== "Critical") return 1;
-        return a.health - b.health; // Ascending (0 dulu baru 100)
+        return a.health - b.health; 
       });
 
       setNotifications(sortedNotifs);
@@ -119,7 +108,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
 
   return (
     <nav className="sticky top-0 z-20 bg-white h-16 sm:h-[90px] px-4 md:px-9 flex justify-between items-center shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
-      {/* KIRI: Toggle & Title */}
       <div className="flex items-center gap-4">
         <button onClick={onToggleSidebar} className="p-2 md:hidden">
           <svg
@@ -160,10 +148,8 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
             )}
           </button>
 
-          {/* ISI DROPDOWN */}
           {isNotifOpen && (
             <div className="absolute right-0 mt-4 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
-              {/* Header Dropdown */}
               <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/80 backdrop-blur-sm">
                 <div>
                   <h4 className="font-bold text-gray-800 text-sm">
@@ -197,7 +183,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
                           : "bg-white"
                       }`}
                     >
-                      {/* Indicator Bar Kiri */}
                       <div
                         className={`absolute left-0 top-0 bottom-0 w-1 ${
                           notif.status === "Critical"
@@ -265,7 +250,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
 
         {/* PROFIL USER */}
         <div
-          // onClick={onLogout}
           className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-xl transition-all border border-transparent hover:border-gray-200"
         >
           <img
