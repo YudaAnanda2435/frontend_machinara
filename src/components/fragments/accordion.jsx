@@ -40,19 +40,16 @@ const processData = [
   },
 ];
 
-//  komponen untuk SATU item accordion
 const AccordionItem = ({ item, isOpen, toggleItem }) => {
   const { id, title, description } = item;
 
   return (
-    // kelas kondisional: --open atau --closed
     <div
       onClick={() => toggleItem(id)}
       className={`accordion-item ${
         isOpen ? "accordion-item--open" : "accordion-item--closed"
       }`}
     >
-      {/* Header adalah tombol untuk toggle */}{" "}
       <div className="accordion-item__header">
         {" "}
         <div className="accordion-item__trigger">
@@ -60,11 +57,8 @@ const AccordionItem = ({ item, isOpen, toggleItem }) => {
           <h3 className="accordion-item__title">{title}</h3>{" "}
         </div>{" "}
         <div className="accordion-item__icon-wrapper">
-          {/* Container ikon baru */}
           <div className="accordion-icon">
-            {/* Bar horizontal (selalu ada) */}
             <div className="accordion-icon__bar"></div>
-            {/* Bar vertikal (yang akan berputar) */}
             <div className="accordion-icon__bar"></div>
           </div>
         </div>
@@ -79,23 +73,15 @@ const AccordionItem = ({ item, isOpen, toggleItem }) => {
   );
 };
 
-// Ini adalah komponen UTAMA Anda
 const WorkingProcess = ({ className }) => {
-  // State untuk melacak item mana yang terbuka. Default "01".
   const [openItem, setOpenItem] = useState("01");
-
-  // Fungsi untuk mengubah item yang terbuka
   const toggleItem = (id) => {
-    // Jika item yang sama diklik, tutup (set ke null)
-    // Jika item berbeda diklik, buka item itu
     setOpenItem(openItem === id ? null : id);
   };
 
   return (
     <section className={`container-main ${className}`}>
-      {/* Gunakan wrapper dari CSS */}{" "}
       <div className="accordion-wrapper">
-        {/* Loop data dan render setiap item */}{" "}
         {processData.map((item) => (
           <AccordionItem
             key={item.id}

@@ -27,7 +27,6 @@ import {
 const BASE_URL = "https://backend-dev-service.up.railway.app/auth";
 
 const Admin = () => {
-  // State Data
   const [employees, setEmployees] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,7 +45,7 @@ const Admin = () => {
     isOpen: false,
     title: "",
     message: "",
-    type: "success", // "success" | "error"
+    type: "success", 
   });
 
   const [deleteConfirm, setDeleteConfirm] = useState({
@@ -67,7 +66,6 @@ const Admin = () => {
   const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      // Tidak pakai alert biasa, langsung redirect atau handle di UI
       window.location.href = "/login";
       return null;
     }
@@ -102,7 +100,6 @@ const Admin = () => {
       setEmployees(result.data || []);
     } catch (err) {
       console.error("Error fetching users:", err);
-      // Optional: showAlert("Error", "Gagal memuat data pegawai.", "error");
     } finally {
       setIsLoading(false);
     }
@@ -142,12 +139,10 @@ const Admin = () => {
     setIsLoading(true);
     try {
       if (isEditing) {
-        // --- PUT (Update) ---
         const updatePayload = {
           name: formData.name,
           biography: formData.biography || "Pegawai",
           ...(formData.password && { password: formData.password }),
-          // Phone TIDAK dikirim karena readOnly/tidak diubah
         };
 
         const response = await fetch(`${BASE_URL}/users/${formData.id}`, {
@@ -219,8 +214,6 @@ const Admin = () => {
   };
 
   // --- 4. DELETE LOGIC ---
-
-  // Tahap 1: Buka Modal Konfirmasi
   const initiateDelete = (id) => {
     setDeleteConfirm({ isOpen: true, idToDelete: id });
   };
@@ -228,7 +221,7 @@ const Admin = () => {
   // Tahap 2: Eksekusi Delete (Saat tombol 'Ya' ditekan)
   const proceedDelete = async () => {
     const id = deleteConfirm.idToDelete;
-    setDeleteConfirm({ isOpen: false, idToDelete: null }); // Tutup modal konfirmasi
+    setDeleteConfirm({ isOpen: false, idToDelete: null }); 
 
     const headers = getAuthHeaders();
     if (!headers) return;
@@ -281,7 +274,6 @@ const Admin = () => {
   return (
     <div className="h-screen w-full bg-gray-50 p-6 font-sans flex flex-col overflow-hidden">
       <div className="max-w-[1440px] w-full mx-auto h-full flex flex-col">
-        {/* HEADER */}
         <div className="flex justify-between items-center mb-8 shrink-0">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">
@@ -300,7 +292,6 @@ const Admin = () => {
 
         {/* CONTENT AREA */}
         <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* --- KOLOM KIRI: FORM INPUT --- */}
           <div className="md:col-span-1 overflow-y-auto pr-1">
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -328,7 +319,6 @@ const Admin = () => {
                   />
                 </div>
 
-                {/* Input No HP (KEMBALI KE READONLY SAAT EDIT) */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Nomor HP (ID Login)
@@ -343,7 +333,7 @@ const Admin = () => {
                       isEditing ? "bg-gray-100 text-gray-500" : ""
                     }`}
                     readOnly={isEditing}
-                    disabled={isLoading} // Tetap bisa diketik kalau bukan mode edit
+                    disabled={isLoading} 
                   />
                   {isEditing && (
                     <p className="text-xs text-gray-400 mt-1">
@@ -483,7 +473,7 @@ const Admin = () => {
                             </button>
                             {emp.role !== "admin" && (
                               <button
-                                onClick={() => initiateDelete(emp.id)} // Ganti handleDelete jadi initiateDelete
+                                onClick={() => initiateDelete(emp.id)} 
                                 className="inline-flex items-center justify-center p-2 text-red-600 hover:bg-red-50 rounded-md transition"
                                 title="Hapus"
                               >
