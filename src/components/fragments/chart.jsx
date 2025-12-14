@@ -118,13 +118,13 @@ const MixBarChart = () => {
             interval={0}
             tickFormatter={(value) => value.substring(0, 3)}
             dy={10}
-            axisLine={false} 
+            axisLine={false}
             tickLine={true}
           />
 
           <YAxis
             tick={{ fill: "#6B7280", fontSize: 10 }}
-            axisLine={false} // Hilangkan garis sumbu kiri
+            axisLine={{ stroke: "#D1D5DB" }}
             tickLine={false}
           />
 

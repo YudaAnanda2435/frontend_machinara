@@ -346,7 +346,7 @@ export const ManualInputSection = ({
           Maintenance and service actions for machine
         </p>
 
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <button
             onClick={() => setInputType("anomaly")}
             className={`py-4 rounded-lg border text-sm font-medium flex flex-col items-center justify-center gap-2 transition-all ${
@@ -389,7 +389,7 @@ export const ManualInputSection = ({
                 <p className="text-xs text-gray-500 mb-2">
                   Scan entire fleet for Critical and Warning statuses.
                 </p>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-white p-3 rounded-lg border shadow-sm">
                     <span className="text-xs text-gray-400">Target</span>
                     <p className="font-bold text-sm">All Machines</p>
@@ -435,7 +435,7 @@ export const ManualInputSection = ({
               </div>
               <div className="relative">
                 <textarea
-                  className="w-full p-4 pr-12 text-sm border rounded-xl focus:ring-2 focus:ring-primary/15 outline-none min-h-[100px] resize-none transition-all shadow-sm"
+                  className="w-full p-4 sm:pr-12 text-sm border rounded-xl focus:ring-2 focus:ring-primary/15 outline-none min-h-[100px] resize-none transition-all shadow-sm"
                   placeholder="Ask AI or type 'Yes' to create a ticket automatically..."
                   value={forecastQuery}
                   onChange={(e) => setForecastQuery(e.target.value)}
@@ -494,8 +494,8 @@ export const ManualInputSection = ({
               </h4>
               <div className="relative ">
                 <textarea
-                  className="w-full leading-px resize-none py-8 px-4 pl-12 text-sm border rounded-xl focus:ring-2 focus:ring-primary/15 outline-none"
-                  placeholder="Enter Machine ID (e.g., L47441)..."
+                  className="w-full leading-px resize-none py-5 sm:py-8 px-4 pl-12 text-sm border rounded-xl focus:ring-2 focus:ring-primary/15 outline-none"
+                  placeholder="Enter Machine ID "
                   value={machineId}
                   onChange={(e) => setMachineId(e.target.value)}
                   disabled={isLoading}
