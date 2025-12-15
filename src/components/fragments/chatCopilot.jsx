@@ -165,7 +165,7 @@ export const ChatCopilot = () => {
       {/* Overlay Gelap */}
       {isOpen && (
         <div
-          className="fixed font-roboto inset-0 z-30 bg-black/30 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in-0"
+          className="fixed font-roboto inset-0 z-50 bg-black/30 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in-0"
           aria-hidden="true"
           onClick={() => setIsOpen(false)}
         />
@@ -191,7 +191,7 @@ export const ChatCopilot = () => {
       {isOpen && (
         <div
           ref={popoverRef}
-          className="fixed bottom-[106px] right-8 z-40 w-[400px] md:w-[450px] rounded-2xl shadow-2xl border border-gray-200 bg-white chat-popover-tail flex flex-col overflow-hidden max-h-[80vh]"
+          className="fixed bottom-[106px] right-8 z-60 w-[320px] sm:w-[400px] md:w-[450px] rounded-2xl shadow-2xl border border-gray-200 bg-white chat-popover-tail flex flex-col overflow-hidden max-h-[80vh]"
         >
           <div className="flex flex-col h-[500px]">
             {/* HEADER */}

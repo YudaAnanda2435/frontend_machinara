@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Buttons from "../elements/button";
 import AnimatedHamburgerIcon from "../elements/hamburger/AnimatedHamburgerIcon";
-import Logo from "/logo.svg";
+import Logo from "/logo-transparant.png";
 import { navLinks } from "../../data/navigation";
 
 const HomeNavbar = () => {
@@ -48,7 +48,7 @@ const HomeNavbar = () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         >
-          <img src={Logo} alt="Logo Perusahaan" />
+          <img className="w-[180px] sm:w-fit" src={Logo} alt="Logo Perusahaan" />
         </Link>
 
         <ul className="hidden md:flex flex-row w-full justify-end items-center gap-8">
