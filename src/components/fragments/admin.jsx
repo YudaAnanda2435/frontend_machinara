@@ -277,11 +277,11 @@ const Admin = () => {
   };
 
   return (
-    <div className="h-screen w-full bg-gray-50 p-6 font-sans flex flex-col overflow-hidden">
+    <div className="md:h-screen w-full bg-gray-50 p-6 font-sans flex flex-col overflow-hidden">
       <div className="max-w-[1440px] w-full mx-auto h-full flex flex-col">
         <div className="flex justify-between items-center mb-8 shrink-0">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
               Admin Dashboard
             </h1>
             <p className="text-gray-500">Kelola Daftar Pegawai Terdaftar</p>

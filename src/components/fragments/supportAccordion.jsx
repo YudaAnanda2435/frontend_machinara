@@ -15,7 +15,7 @@ const processData = [
     id: "02",
     title: "Integration Strategy",
     description:
-      "Once requirements are clear, we design a data integration plan. We analyze your existing PLC/SCADA infrastructure or recommend compatible IoT sensors to ensure seamless connectivity with Machinara.",
+      "Machinara integrates directly with your existing industrial data ecosystem. By utilizing historical and operational data from PLC/SCADA systems, machine logs, and enterprise systems, Machinara ensures smooth integration without the need for new sensors or hardware changes.",
   },
   {
     id: "03",

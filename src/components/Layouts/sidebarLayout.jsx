@@ -69,12 +69,12 @@ const Sidebar = ({ isSidebarOpen, closeSidebar, onLogout }) => {
 
   return (
     <div
-      className={`fixed inset-y-0 flex flex-col bg-white gap-14 left-0 px-7 lg:px-[46px] pt-[30px] w-[280px] lg:w-[345px] transform transition-transform duration-300 ease-in-out z-30 
+      className={`fixed inset-y-0 flex flex-col bg-white gap-14 left-0 px-5 sm:x-7 lg:px-[46px] pt-[30px] w-[280px] lg:w-[345px] transform transition-transform duration-300 ease-in-out z-30 
                   md:relative md:translate-x-0 
                   ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
     >
       <div className="flex justify-between items-center">
-        <img className="" src={Logo} alt="Machinara Logo" />
+        <img className="w-[180px] sm:w-fit" src={Logo} alt="Machinara Logo" />
         <button onClick={closeSidebar} className="md:hidden p-2">
           <svg
             className="h-6 w-6"

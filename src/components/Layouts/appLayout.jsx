@@ -10,7 +10,7 @@ const AppLayout = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user_data");
 
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const location = useLocation();

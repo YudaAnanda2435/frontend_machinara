@@ -39,7 +39,7 @@ const HomeNavbar = () => {
 
   return (
     <>
-      <nav className="container-main mb-[50px] z-10 sticky top-0  flex flex-row justify-between items-center py-4 bg-white/80 backdrop-blur-sm">
+      <nav className="container-main mb-[50px] z-50 sticky top-0  flex flex-row justify-between items-center py-4 bg-white/80 backdrop-blur-sm">
         <Link
           to="/"
           aria-label="Beranda"

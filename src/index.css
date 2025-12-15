@@ -282,7 +282,6 @@ body {
   .profile-card__description {
   }
 
-  /* card ai */
   .card-ai{
     @apply flex flex-row gap-10 items-center w-full py-2 px-2.5 rounded-[10px] border border-[#798AA3];
   }
@@ -291,7 +290,6 @@ body {
     @apply text-[14px];
   }
 
-  /* testimonials */
   .testimonial-bubble {
   @apply relative p-6 sm:p-[50px] border rounded-[45px] border-[#8C90FF] w-full max-w-[606px];
 }
