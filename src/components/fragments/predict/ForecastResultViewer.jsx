@@ -116,7 +116,7 @@ export const ForecastResultViewer = ({ rawResult }) => {
       {
         label: "Current Risk Score",
         data: currentTrend.map((item) => item.risk_score),
-        borderColor: "rgb(239, 68, 68)", // Red-500
+        borderColor: "rgb(239, 68, 68)", 
         backgroundColor: "rgba(239, 68, 68, 0.5)",
         tension: 0.3,
         pointRadius: 4,

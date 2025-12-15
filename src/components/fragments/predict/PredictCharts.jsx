@@ -19,10 +19,8 @@ export default function PredictPage() {
 
   // State Pagination (BARU)
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true); // Cek apakah masih ada data di server
+  const [hasMore, setHasMore] = useState(true); 
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  // State Tampilan Header
   const [headerMode, setHeaderMode] = useState("sidebar");
   const [forecastData, setForecastData] = useState(null);
 
@@ -35,7 +33,6 @@ export default function PredictPage() {
     const isReloading = sessionStorage.getItem("is_predict_reloading");
 
     if (isReloading) {
-      // Restore session...
       const savedData = sessionStorage.getItem("predict_page_state");
       if (savedData) {
         const parsed = JSON.parse(savedData);
@@ -44,15 +41,13 @@ export default function PredictPage() {
         setSelectedDetail(parsed.selectedDetail || null);
         setManualDetail(parsed.manualDetail || null);
         setForecastCache(parsed.forecastCache || {});
-        // Restore page state juga
         setPage(parsed.page || 1);
         setHasMore(parsed.hasMore ?? true);
       }
       sessionStorage.removeItem("is_predict_reloading");
     } else {
-      // FRESH LOAD
       sessionStorage.removeItem("predict_page_state");
-      fetchInitialData(); // Panggil fungsi fetch awal
+      fetchInitialData(); 
     }
 
     isMounted.current = true;
@@ -74,8 +69,8 @@ export default function PredictPage() {
         selectedDetail,
         manualDetail,
         forecastCache,
-        page, // Simpan halaman terakhir
-        hasMore, // Simpan status
+        page,
+        hasMore, 
       };
       sessionStorage.setItem("predict_page_state", JSON.stringify(stateToSave));
     }
@@ -92,7 +87,6 @@ export default function PredictPage() {
   // --- FUNGSI FETCH DATA AWAL (Page 1) ---
   const fetchInitialData = async () => {
     try {
-      // Reset State
       setPage(1);
       setHasMore(true);
 
@@ -101,10 +95,7 @@ export default function PredictPage() {
 
       const data = await response.json();
       const list = Array.isArray(data) ? data : data.data || [];
-
       setEquipmentList(list);
-
-      // Auto select first item
       if (list.length > 0) {
         setSelectedId(list[0].product_id);
         setHeaderMode("sidebar");
@@ -113,8 +104,6 @@ export default function PredictPage() {
       console.error("Error initial load:", error);
     }
   };
-
-  // --- FUNGSI LOAD MORE (Page 2, 3, dst) ---
   const handleLoadMore = async () => {
     if (!hasMore || isLoadingMore) return;
 
@@ -131,9 +120,8 @@ export default function PredictPage() {
       const newList = Array.isArray(data) ? data : data.data || [];
 
       if (newList.length === 0) {
-        setHasMore(false); // Stop jika data habis
+        setHasMore(false); 
       } else {
-        // GABUNGKAN DATA LAMA + DATA BARU
         setEquipmentList((prev) => [...prev, ...newList]);
         setPage(nextPage);
       }
@@ -144,7 +132,6 @@ export default function PredictPage() {
     }
   };
 
-  // --- FETCH DETAIL MESIN ---
   useEffect(() => {
     if (!selectedId) return;
     const fetchDetail = async () => {
@@ -171,11 +158,9 @@ export default function PredictPage() {
     };
     fetchDetail();
   }, [selectedId]);
-
-  // Handler Anomaly (Reset Pagination karena ganti list)
   const handleAnomaliesFound = (data) => {
     setEquipmentList(data);
-    setHasMore(false); // Anomaly scan biasanya tidak pagination (kecuali dihandle BE)
+    setHasMore(false); 
     if (data.length > 0) {
       setSelectedId(data[0].product_id);
       setManualDetail(null);
@@ -183,7 +168,6 @@ export default function PredictPage() {
     }
   };
 
-  // Handler Lainnya (Sama)
   const handleManualStatusSuccess = (data) => {
     setSelectedId(null);
     setSelectedDetail(null);
@@ -199,7 +183,6 @@ export default function PredictPage() {
     else setHeaderMode("sidebar");
   };
 
-  // Logic Header Info
   let headerBasicInfo = {};
   if (headerMode === "manual" && manualDetail) {
     headerBasicInfo = {
@@ -229,7 +212,6 @@ export default function PredictPage() {
             selectedId={selectedId}
             onSelect={setSelectedId}
             data={equipmentList}
-            // Props Baru untuk Pagination
             onLoadMore={handleLoadMore}
             hasMore={hasMore}
             isLoadingMore={isLoadingMore}

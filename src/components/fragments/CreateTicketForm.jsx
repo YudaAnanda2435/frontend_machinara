@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState  } from "react";
 
-// Impor komponen Shadcn/ui
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,62 +12,41 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog"; // Pastikan dialog sudah diinstal
-
-// Impor Ikon (Sukses, Loading, Error)
+} from "@/components/ui/dialog";
 import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
-
-// Impor komponen DatePicker
 import { DatePicker } from "@/components/ui/DatePicker";
-
-// Impor Context dan Content
-import LocaleContext from "@/contexts/LocaleContext";
 
 
 const CreateTicketForm = () => {
-  // 1. Ambil locale dari Context
-
-
-  // --- STATE MANAGEMENT ---
   const [isLoading, setIsLoading] = useState(false);
-
-  // State untuk Modal SUKSES
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-
-  // State untuk Modal ERROR (Custom Alert)
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // [BE INTEGRATION] State untuk menampung data form
   const [formData, setFormData] = useState({
     machineName: "",
     date: null,
     issue: "",
   });
 
-  // Handler perubahan input text
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // --- FUNGSI HELPER: Tampilkan Error Modal ---
   const showError = (message) => {
     setErrorMessage(message);
     setIsErrorModalOpen(true);
   };
 
-  // Handler perubahan tanggal
   const handleDateChange = (selectedDate) => {
     setFormData((prev) => ({ ...prev, date: selectedDate }));
   };
 
-  // --- FUNGSI SUBMIT TIKET ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // [BE INTEGRATION] 1. Validasi Data
     console.log("Data to send:", formData);
 
     if (!formData.machineName || !formData.issue || !formData.date) {
@@ -113,7 +91,6 @@ const CreateTicketForm = () => {
       setIsSuccessModalOpen(true);
       setFormData({ machineName: "", date: "", issue: "" });
 
-      // Jika sukses:
       setIsSuccessModalOpen(true);
     } catch (error) {
       console.error("Error creating ticket:", error);
@@ -163,7 +140,6 @@ const CreateTicketForm = () => {
               </div>
             </div>
 
-            {/* Grup Issue */}
             <div className="flex flex-col gap-2">
               <Label
                 htmlFor="issue"
@@ -185,7 +161,6 @@ const CreateTicketForm = () => {
               </p>
             </div>
 
-            {/* Tombol Submit */}
             <div className="flex justify-start">
               <Button
                 type="submit"
@@ -199,7 +174,6 @@ const CreateTicketForm = () => {
                     Creating...
                   </>
                 ) : (
-                  // Teks tombol dinamis berdasarkan locale
                   "Create Ticket"
                 )}
               </Button>
@@ -208,7 +182,6 @@ const CreateTicketForm = () => {
         </CardContent>
       </Card>
 
-      {/* === MODAL SUKSES (HIJAU) === */}
       <Dialog open={isSuccessModalOpen} onOpenChange={setIsSuccessModalOpen}>
         <DialogContent className="sm:max-w-md bg-white">
           <DialogHeader className="flex flex-col items-center text-center gap-2">
@@ -235,7 +208,6 @@ const CreateTicketForm = () => {
         </DialogContent>
       </Dialog>
 
-      {/* === MODAL ERROR (MERAH - Custom Alert) === */}
       <Dialog open={isErrorModalOpen} onOpenChange={setIsErrorModalOpen}>
         <DialogContent className="sm:max-w-md bg-white border-l-4 border-red-500">
           <DialogHeader className="flex flex-col items-center text-center gap-2">

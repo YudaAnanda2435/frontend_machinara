@@ -352,7 +352,6 @@ export const EquipmentHeader = ({
     );
   }
 
-  // Tampilan Putih (Sidebar)
   return (
     <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm min-h-[400px] animate-in fade-in">
       <div className="flex justify-between items-start mb-6">

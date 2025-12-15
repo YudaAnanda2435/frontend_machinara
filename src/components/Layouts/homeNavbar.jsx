@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-// --- Import Elements ---
 import Buttons from "../elements/button";
 import AnimatedHamburgerIcon from "../elements/hamburger/AnimatedHamburgerIcon";
 import Logo from "/logo.svg";
@@ -78,7 +77,7 @@ const HomeNavbar = () => {
               <Buttons
                 className="text-black buttonAnimate2"
                 background="bg-transparent"
-                text="Request a quote" 
+                text="Login" 
               />
             </Link>
           </li>

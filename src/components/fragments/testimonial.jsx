@@ -18,7 +18,6 @@ import { useState } from "react";
 import { testimonialData } from "../../data/testimonial";
 
 const Testimonial = ({ className, id }) => {
-  // --- PERUBAHAN 2: Buat state untuk melacak klik terakhir ---
   const [lastClicked, setLastClicked] = useState("next");
 
   return (
@@ -29,10 +28,9 @@ const Testimonial = ({ className, id }) => {
       <div className="bg-[#191A23] pt-[84px] flex flex-col gap-[45px] md:gap-[124px] pb-[68px] rounded-[45px] overflow-hidden">
         <Swiper
           modules={[Navigation, Pagination]}
-          // --- INI ADALAH SETTING DEFAULT (MOBILE / < 768px) ---
-          slidesPerView={1.3} // Tampilkan 1 slide
-          centeredSlides={true} // Tidak perlu di-center jika hanya 1
-          initialSlide={1} // Mulai dari slide pertama (atau 0)
+          slidesPerView={1.3}
+          centeredSlides={true}
+          initialSlide={1}
           loop={true}
           spaceBetween={10}
           pagination={{
@@ -44,21 +42,18 @@ const Testimonial = ({ className, id }) => {
             nextEl: ".testimonial-next-arrow",
           }}
           className="w-full"
-          // --- INI ADALAH SETTING UNTUK LAYAR LEBIH BESAR ---
           breakpoints={{
-            // '768' adalah breakpoint 'md' di Tailwind
             768: {
-              slidesPerView: 2, // Kembali ke 2 slide
-              centeredSlides: true, // Aktifkan centering lagi
-              initialSlide: 3, // Kembalikan initial slide desktop Anda
+              slidesPerView: 2,
+              centeredSlides: true,
+              initialSlide: 3, 
             },
           }}
         >
           {testimonialData.map((item) => (
             <SwiperSlide key={item.id}>
               {({ isActive }) => (
-                <div
-                  // Logika 'isActive' ini akan tetap berfungsi di kedua layout
+                <div                
                   className={`flex flex-col items-start transition-all duration-300 ${
                     isActive ? "opacity-100 scale-100" : "opacity-50 scale-90"
                   }`}
@@ -77,12 +72,7 @@ const Testimonial = ({ className, id }) => {
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {/* 6. Navigasi Kustom (Di luar Swiper) */}
         <div className="flex flex-row w-full px-6 max-w-[564px] items-center justify-between mx-auto">
-          {/* ... (Kode navigasi Anda tidak berubah) ... */}
-
-          {/* Tombol Kiri */}
           <button
             className="testimonial-prev-arrow group cursor-pointer"
             aria-label="Previous testimonial"
@@ -95,12 +85,8 @@ const Testimonial = ({ className, id }) => {
             />
           </button>
 
-          {/* Pagination */}
           <div className="testimonial-pagination mx-auto justify-center items-center flex gap-2">
-            {/* Bullets akan di-render Swiper di sini */}
           </div>
-
-          {/* Tombol Kanan */}
           <button
             className="testimonial-next-arrow group cursor-pointer"
             aria-label="Next testimonial"

@@ -42,20 +42,17 @@ export const ManualInputSection = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isAnomalyLoading, setIsAnomalyLoading] = useState(false);
 
-  // --- UNIFIED MODAL STATES ---
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
-    type: "error", // 'error' or 'success'
+    type: "error", 
     title: "",
     message: "",
   });
 
-  // --- STATE TICKET MODAL (Hanya dipakai jika tombol shortcut diklik) ---
   const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
   const [isTicketLoading, setIsTicketLoading] = useState(false);
   const [ticketData, setTicketData] = useState({ issue: "", date: "" });
 
-  // Helper to show modals
   const showModal = (type, title, message) => {
     setModalConfig({ isOpen: true, type, title, message });
   };
@@ -88,21 +85,16 @@ export const ManualInputSection = ({
   const handleCheckAnomaly = async () => {
     setIsAnomalyLoading(true);
     try {
-      // STRATEGI: Fetch Paralel agar Cepat & Akurat
-
-      // 1. Request Prioritas: Gabungan Critical & Warning (Sesuai instruksi BE)
       const priorityPromise = fetch(
         "https://machinelearning-production-344f.up.railway.app/dashboard/machines?status=Critical&status=Warning&limit=50",
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
 
-      // 2. Request Sekunder: Ambil Data Normal
       const normalPromise = fetch(
         "https://machinelearning-production-344f.up.railway.app/dashboard/machines?status=Normal&limit=20",
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
 
-      // Jalankan keduanya bersamaan
       const [priorityRes, normalRes] = await Promise.all([
         priorityPromise,
         normalPromise,
@@ -115,7 +107,6 @@ export const ManualInputSection = ({
       const priorityData = await priorityRes.json();
       const normalData = await normalRes.json();
 
-      // Pastikan format array
       const criticalAndWarningList = Array.isArray(priorityData)
         ? priorityData
         : priorityData.data || [];
@@ -124,7 +115,6 @@ export const ManualInputSection = ({
         ? normalData
         : normalData.data || [];
 
-      // 3. GABUNGKAN: Critical/Warning duluan, baru Normal
       const combinedList = [...criticalAndWarningList, ...normalList];
 
       if (onAnomaliesFound) onAnomaliesFound(combinedList);
@@ -169,7 +159,6 @@ export const ManualInputSection = ({
     }
   };
 
-  // --- MODIFIED: Handle Run Prediction with DIRECT TICKET CREATION ---
   const handleRunPrediction = async () => {
     if (!selectedId) {
       showModal(
@@ -188,10 +177,8 @@ export const ManualInputSection = ({
       return;
     }
 
-    // --- FIX LOGIC DETEKSI INTENT ---
     const lowerQuery = forecastQuery.toLowerCase();
 
-    // 1. Keyword Perintah Jelas
     const explicitCommands = [
       "buatkan ticket",
       "buatkan tiket",
@@ -216,47 +203,33 @@ export const ManualInputSection = ({
       "izin",
     ];
 
-    // Cek Perintah Eksplisit
     const hasExplicitCommand = explicitCommands.some((cmd) =>
       lowerQuery.includes(cmd)
     );
 
-    // Cek Kata Persetujuan (Tokenization)
     const words = lowerQuery.split(/[\s,?!.]+/).filter((w) => w.length > 0);
     const hasAgreementWord = words.some((word) =>
       agreementWords.includes(word)
     );
 
-    // 3. Apakah User Berniat Membuat Tiket?
-    // (Ada Perintah Jelas) ATAU (Ada kata setuju DAN kalimatnya pendek)
     const isTicketIntent =
       hasExplicitCommand || (hasAgreementWord && words.length <= 6);
-
-    // 4. CEK KONTEKS: Apakah sudah ada history forecast?
     const hasPriorContext = forecastCache && forecastCache[selectedId];
-
-    // --- LOGIC UTAMA ---
-
-    // KASUS A: User minta tiket TAPI belum simulasi
     if (isTicketIntent && !hasPriorContext) {
       showModal(
         "error",
         "Simulation Required",
         "Please run a simulation/prediction first before creating a ticket."
       );
-      return; // Stop disini
+      return; 
     }
 
-    // KASUS B: User minta tiket DAN sudah simulasi -> AUTO CREATE
     if (isTicketIntent && hasPriorContext) {
       setIsForecastLoading(true);
 
       try {
-        // Ambil Token
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Anda harus login untuk membuat tiket.");
-
-        // Siapkan Data Otomatis
         const previousResult =
           forecastCache?.[selectedId]?.result?.answer || "";
         const autoIssue = previousResult
@@ -268,18 +241,17 @@ export const ManualInputSection = ({
 
         const payload = {
           machine_name: selectedId,
-          date: new Date().toISOString().split("T")[0], // Hari ini
+          date: new Date().toISOString().split("T")[0],
           issue: autoIssue,
         };
 
-        // Langsung Tembak API Tiket
         const response = await fetch(
           "https://api-ticketing.up.railway.app/api/tickets",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // PENTING: Token Wajib Ada
+              Authorization: `Bearer ${token}`, 
             },
             body: JSON.stringify(payload),
           }
@@ -289,17 +261,15 @@ export const ManualInputSection = ({
 
         // Sukses
         showModal("success", "Success", "Ticket Created Automatically by AI!");
-        setForecastQuery(""); // Reset input
+        setForecastQuery(""); 
       } catch (error) {
         showModal("error", "Auto-Ticket Failed", error.message);
       } finally {
         setIsForecastLoading(false);
       }
 
-      return; // Stop disini
+      return; 
     }
-
-    // KASUS C: Tidak ada niat tiket (Pertanyaan biasa) -> JALANKAN FORECAST AI
     setIsForecastLoading(true);
 
     try {
@@ -337,7 +307,6 @@ export const ManualInputSection = ({
     }
   };
 
-  // --- Fungsi Manual Create Ticket (via Modal Shortcut) ---
   const handleCreateTicket = async () => {
     setIsTicketLoading(true);
     try {
@@ -356,7 +325,7 @@ export const ManualInputSection = ({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Fix Token Disini Juga
+            Authorization: `Bearer ${token}`, 
           },
           body: JSON.stringify(payload),
         }
@@ -480,25 +449,19 @@ export const ManualInputSection = ({
                   onChange={(e) => setForecastQuery(e.target.value)}
                   disabled={isForecastLoading}
                   // --- PERBAIKAN EVENT HANDLER ---
-                  onKeyDown={(e) => {
-                    // 1. Cek apakah tombol Enter ditekan
-                    if (e.key === "Enter") {
-                      // 2. Cek apakah tombol Shift TIDAK ditekan
+                  onKeyDown={(e) => {                   
+                    if (e.key === "Enter") {                    
                       if (!e.shiftKey) {
-                        e.preventDefault(); // Mencegah garis baru (Enter biasa)
-
-                        // Debugging: Cek di Console browser apakah pesan ini muncul
+                        e.preventDefault();                         
                         console.log(
                           "Enter ditekan. Mengirim data...",
                           forecastQuery
                         );
 
-                        handleRunPrediction(); // Jalankan fungsi kirim
+                        handleRunPrediction(); 
                       }
-                      // Jika Shift+Enter, biarkan default (buat garis baru)
                     }
                   }}
-                  // ------------------------------
                 />
                 {isForecastLoading && (
                   <div className="absolute right-3 bottom-3">
@@ -508,7 +471,6 @@ export const ManualInputSection = ({
               </div>
 
               <div className="flex gap-2 mt-4">
-                {/* Tombol Utama */}
                 <Button
                   className="w-full py-6 bg-primary hover:bg-primary/90 text-white font-semibold text-md shadow-md hover:shadow-lg transition-all"
                   onClick={handleRunPrediction}
@@ -539,21 +501,15 @@ export const ManualInputSection = ({
                   onChange={(e) => setMachineId(e.target.value)}
                   disabled={isLoading}
                   onKeyDown={(e) => {
-                    // 1. Cek apakah tombol Enter ditekan
                     if (e.key === "Enter") {
-                      // 2. Cek apakah tombol Shift TIDAK ditekan
                       if (!e.shiftKey) {
-                        e.preventDefault(); // Mencegah garis baru (Enter biasa)
-
-                        // Debugging: Cek di Console browser apakah pesan ini muncul
+                        e.preventDefault();
                         console.log(
                           "Enter ditekan. Mengirim data...",
                           machineId
                         );
-
-                        handleCheckStatus(); // Jalankan fungsi kirim
+                        handleCheckStatus(); 
                       }
-                      // Jika Shift+Enter, biarkan default (buat garis baru)
                     }
                   }}
                 />
@@ -662,7 +618,7 @@ export const ManualInputSection = ({
             <div className="grid gap-2">
               <label className="text-sm font-medium">Issue Description</label>
               <textarea
-                className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 value={ticketData.issue}
                 onChange={(e) =>
                   setTicketData({ ...ticketData, issue: e.target.value })

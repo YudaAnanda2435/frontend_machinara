@@ -12,7 +12,7 @@ import Linkedin from "/linkedin.svg";
 
 const CardTeam = () => {
   return (
-    <section className="container-main gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 md:mt-[102px] mb-24 md:mb-[186px]">
+    <section className="container-main gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 md:mt-10 mb-24 md:mb-[186px]">
       {/* CARD 1: Rasyid */}
       {/* 1. Tambahkan 'group' di div pembungkus utama card */}
       <div className="profile-card group">

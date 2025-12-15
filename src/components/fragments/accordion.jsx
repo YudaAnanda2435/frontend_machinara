@@ -10,9 +10,9 @@ const processData = [
   },
   {
     id: "02",
-    title: "Integration & Connectivity",
+    title: "How does the Machinara web platform work",
     description:
-      "Seamlessly connect your existing machine sensors (PLC/SCADA) to Machinara’s cloud platform, or deploy our IoT devices for a quick, plug-and-play setup.",
+      "Machinara is a cloud-based application where you input your machine operational data. Our predictive AI analyzes this data to identify patterns, helping you visualize equipment health and predict potential maintenance needs through an intuitive dashboard.",
   },
   {
     id: "03",
@@ -30,7 +30,7 @@ const processData = [
     id: "05",
     title: "Alerts & Actionable Reporting",
     description:
-      "When an anomaly is detected, the system instantly generates a detailed maintenance ticket and notifies your team via dashboard or email, ensuring no issue goes unnoticed.",
+      "When a high critical anomaly is detected, the system will immediately enter the anomaly list for prevention before it is completely damaged, this is useful to ensure that no problems are missed.",
   },
   {
     id: "06",

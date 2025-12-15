@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-// import LanguageSwitcher from "../fragments/LanguageSwitcher";
 import Avatar from "../../assets/img/engineer.png";
 import NotifIcon from "/notification.svg";
+import { Link } from "react-router-dom";
 import {
   Loader2,
   AlertTriangle,
@@ -19,7 +19,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
     role: "Team",
   });
 
-  // State Notifikasi
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -27,7 +26,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
 
   const notifRef = useRef(null);
 
-  // 1. Load User Data
   useEffect(() => {
     try {
       const storedData = localStorage.getItem("user_data");
@@ -59,7 +57,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [notifRef]);
 
-  // --- LOGIC FETCH & SMART SORTING ---
   const fetchCriticalMachines = async () => {
     if (notifications.length === 0) setIsLoadingNotif(true);
 
@@ -94,7 +91,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
     }
   };
 
-  // Helper formatting tanggal
   const formatDate = (dateString) => {
     if (!dateString) return "No Maintenance Record";
     const date = new Date(dateString);
@@ -129,8 +125,6 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
       </div>
 
       <div className="flex items-center gap-3 md:gap-6">
-        {/* <LanguageSwitcher /> */}
-
         <div className="relative" ref={notifRef}>
           <button
             onClick={() => setIsNotifOpen(!isNotifOpen)}
@@ -246,23 +240,23 @@ const DashboardNavbar = ({ onToggleSidebar, title}) => {
         </div>
 
         {/* PROFIL USER */}
-        <div
-          className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-xl transition-all border border-transparent hover:border-gray-200"
-        >
-          <img
-            src={Avatar}
-            alt="Profil"
-            className="w-8 sm:w-10 rounded-full bg-gray-200 object-cover border border-gray-100"
-          />
-          <div className="hidden lg:block text-left">
-            <p className="font-bold text-gray-800 capitalize text-sm leading-tight">
-              {userData.name}
-            </p>
-            <p className="text-[11px] text-gray-500 capitalize font-medium">
-              {userData.role}
-            </p>
+        <Link to="/settings">
+          <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-xl transition-all border border-transparent hover:border-gray-200">
+            <img
+              src={Avatar}
+              alt="Profil"
+              className="w-8 sm:w-10 rounded-full bg-gray-200 object-cover border border-gray-100"
+            />
+            <div className="hidden lg:block text-left">
+              <p className="font-bold text-gray-800 capitalize text-sm leading-tight">
+                {userData.name}
+              </p>
+              <p className="text-[11px] text-gray-500 capitalize font-medium">
+                {userData.role}
+              </p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     </nav>
   );

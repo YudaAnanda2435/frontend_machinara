@@ -30,8 +30,7 @@ export default function PredictPage() {
   const [forecastData, setForecastData] = useState(null);
   const [forecastCache, setForecastCache] = useState({});
   const [isDetailLoading, setIsDetailLoading] = useState(false);
-
-  // 1. INITIAL LOAD
+  
   useEffect(() => {
     fetchInitialData();
   }, []);

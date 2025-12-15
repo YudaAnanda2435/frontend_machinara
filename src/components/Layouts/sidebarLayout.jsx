@@ -1,9 +1,5 @@
-// import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-
 import Logo from "/logo-dashboard.png";
-
-// Impor Icon Normal
 import Dashboard from "/Dashboard-icon.svg";
 import Ticket from "/ticket-icon.svg";
 import Support from "/support-icon.svg";
@@ -17,14 +13,9 @@ import ChartLineActive from "/Chart_Line_active.svg";
 import ChatAiActive from "/chat-sidebar-icon-active.svg";
 import SupportActive from "/support-icon-active.svg";
 import SettingsActive from "/settings-icon-active.svg";
-
-
 import NavigationItem from "../elements/navigation/navigationItem";
 
-
 const Sidebar = ({ isSidebarOpen, closeSidebar, onLogout }) => {
-
-
   const navItems = [
     {
       id: "dashboard",
@@ -34,18 +25,18 @@ const Sidebar = ({ isSidebarOpen, closeSidebar, onLogout }) => {
       activeIcon: DashboardActive,
     },
     {
-      id: "ticketing",
-      to: "/ticketing",
-      text: "Ticketing",
-      icon: Ticket,
-      activeIcon: TicketActive, 
-    },
-    {
       id: "predict",
       to: "/predict",
       text: "Predict",
       icon: ChartLine,
       activeIcon: ChartLineActive,
+    },
+    {
+      id: "ticketing",
+      to: "/ticketing",
+      text: "Ticketing",
+      icon: Ticket,
+      activeIcon: TicketActive,
     },
     {
       id: "chat-ai",

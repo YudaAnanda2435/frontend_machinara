@@ -27,10 +27,9 @@ const CardContent = ({ className, children }) => (
   <div className={`p-6 ${className || ""}`}>{children}</div>
 );
 
-// --- MAIN COMPONENT ---
+
 const CophilotMachinara = () => {
   const [inputText, setInputText] = useState("");
-  // const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const textareaRef = useRef(null); 
@@ -38,24 +37,20 @@ const CophilotMachinara = () => {
 
   const messagesEndRef = useRef(null);
 
-  // 1. STATE INITIALIZATION (AMBIL DARI LOCAL STORAGE)
   const [messages, setMessages] = useState(() => {
     const savedChats = localStorage.getItem("machinara_chat_history");
     return savedChats ? JSON.parse(savedChats) : [];
   });
 
-  // Simpan Session ID agar konteks AI terjaga (atau di-reset saat new chat)
   const [sessionId, setSessionId] = useState(() => {
     return localStorage.getItem("machinara_session_id") || `user_${Date.now()}`;
   });
 
-  // 2. AUTO-SAVE KE LOCAL STORAGE SETIAP ADA PESAN BARU
   useEffect(() => {
     localStorage.setItem("machinara_chat_history", JSON.stringify(messages));
     localStorage.setItem("machinara_session_id", sessionId);
   }, [messages, sessionId]);
 
-  // Data statis dengan Icon
   const contentData = {
     title: "Hello! I'm your AI maintenance assistant...",
     features: [
@@ -86,17 +81,17 @@ const CophilotMachinara = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, connectionError]);
 
-  // --- FUNGSI BARU: RESET / NEW CHAT ---
+  
   const handleClearChat = () => {
     if (
       window.confirm(
         "Mulai percakapan baru? Riwayat chat saat ini akan dihapus."
       )
     ) {
-      setMessages([]); // Kosongkan UI
-      const newSession = `user_${Date.now()}`; // Buat ID sesi baru
+      setMessages([]); 
+      const newSession = `user_${Date.now()}`; 
       setSessionId(newSession);
-      localStorage.removeItem("machinara_chat_history"); // Hapus storage
+      localStorage.removeItem("machinara_chat_history");
       localStorage.setItem("machinara_session_id", newSession);
     }
   };
@@ -108,14 +103,12 @@ const CophilotMachinara = () => {
     }
   };
 
-  // --- LOGIKA AUTO-RESIZE TEXTAREA ---
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
 
       textarea.style.height = "auto";
 
-      // 2. Set tinggi sesuai scrollHeight (tinggi konten)
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
   }, [inputText]); 
@@ -165,7 +158,6 @@ const CophilotMachinara = () => {
       const data = await response.json();
       const aiResponseText = data.reply || "Maaf, respon server kosong.";
 
-      // 2. Tambah Pesan Bot (SUKSES)
       const newAiMessage = {
         id: Date.now() + 1,
         role: "assistant",
@@ -190,7 +182,6 @@ const CophilotMachinara = () => {
 
       setConnectionError(errorMsg);
 
-      // --- FALLBACK / SIMULASI MODE ---
       if (isCorsOrNetworkError) {
         setTimeout(() => {
           const fallbackResponse = `[⚠️ MODE OFFLINE/SIMULASI]\n\nSaya tidak dapat terhubung ke server asli karena kendala teknis (CORS/Network).\n\nNamun, jika server terhubung, saya akan menjawab pertanyaan: "${messageText}" dengan analisis data mesin terkait suhu, getaran, dan prediksi maintenance.`;
@@ -203,7 +194,6 @@ const CophilotMachinara = () => {
           setMessages((prev) => [...prev, newAiMessage]);
         }, 1000);
       } else {
-        // Error lain (bukan koneksi)
         setMessages((prev) => [
           ...prev,
           {
@@ -226,7 +216,6 @@ const CophilotMachinara = () => {
   return (
     <Card className="bg-color-grey w-full my-2 border-none shadow-none">
       <CardContent className="py-6 relative h-[82vh] sm:h-[81vh] flex flex-col px-4 md:px-24 my-5 bg-[#F9FAFB] rounded-3xl shadow-[0_5px_0_#191A23]">
-        {/* === TOMBOL NEW CHAT / RESET (Pojok Kanan Atas) === */}
         {messages.length > 0 && (
           <div className="absolute top-4 right-4 md:right-8 z-10">
             <button
@@ -238,7 +227,6 @@ const CophilotMachinara = () => {
             </button>
           </div>
         )}
-        {/* === AREA CHAT === */}
         <div className="flex-1 overflow-y-auto pr-2 no-scrollbar">
           {messages.length === 0 ? (
             <div className="flex flex-col gap-6 sm:gap-8 h-full justify-center">
@@ -273,14 +261,13 @@ const CophilotMachinara = () => {
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  // PERUBAHAN DI SINI
                   className={`flex gap-2 sm:gap-4 flex-col sm:flex-row ${
                     msg.role === "user"
-                      ? "items-end sm:items-start sm:flex-row-reverse" // User: Mobile Kanan, Desktop Reverse
-                      : "items-start sm:flex-row" // Bot: Mobile Kiri, Desktop Normal
+                      ? "items-end sm:items-start sm:flex-row-reverse" 
+                      : "items-start sm:flex-row" 
                   }`}
                 >
-                  {/* Avatar */}
+        
                   <div
                     className={`rounded-full flex items-center justify-center shrink-0 w-10 h-10`}
                   >
@@ -291,7 +278,7 @@ const CophilotMachinara = () => {
                     )}
                   </div>
 
-                  {/* Bubble */}
+
                   <div
                     className={`p-4 max-w-auto sm:max-w-[80%] rounded-2xl text-[15px] leading-relaxed shadow-sm ${
                       msg.role === "user"
@@ -324,7 +311,6 @@ const CophilotMachinara = () => {
           )}
         </div>
 
-        {/* === AREA ALERT ERROR (Jika Backend Error/CORS) === */}
         {connectionError && (
           <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-start gap-3 animate-in slide-in-from-bottom-2">
             <WifiOff className="text-amber-500 w-5 h-5 shrink-0 mt-0.5" />
@@ -339,26 +325,23 @@ const CophilotMachinara = () => {
           </div>
         )}
 
-        {/* === INPUT === */}
-        {/* === INPUT FORM === */}
         <form onSubmit={onSubmitForm} className="mt-auto border-none!">
           <div className="relative border-none! flex items-end bg-white rounded-2xl shadow-sm  transition-all">
-            {/* GANTI INPUT DENGAN TEXTAREA */}
+        
             <textarea
               ref={textareaRef}
               placeholder="Ask about machine health..."
               className="no-scrollbar w-full max-h-32 min-h-14 focus:outline-none focus:ring-0 py-4 pl-6 pr-14 bg-transparent border-none!  text-gray-700 resize-none overflow-y-auto leading-relaxed"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              onKeyDown={handleKeyDown} // Pasang handler di sini
+              onKeyDown={handleKeyDown} 
               disabled={isLoading}
-              rows={1} // Tinggi awal
+              rows={1}
             />
 
             <button
               type="submit"
               disabled={!inputText.trim() || isLoading}
-              // Sesuaikan posisi button agar tetap di kanan bawah/tengah
               className="absolute right-2 bottom-2 p-2.5 rounded-xl bg-primary text-white hover:bg-primary/90 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
             >
               <SendHorizonal className="h-5 w-5" />

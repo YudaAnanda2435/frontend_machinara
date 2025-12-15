@@ -166,7 +166,7 @@ const Home = () => {
       <TitleContent
         id="usecase"
         title={`Case Studies`}
-        title2={`Explore Real-Life Examples of Our Proven Digital Marketing Success through Our Case Studies`}
+        title2={`Explore Real-Life Examples of How Machinara Prevents Downtime and Optimizes Operations through Our Case Studies.`}
       />
       <CaseStudyCards className={`pt-10`} />
       <TitleContent
@@ -175,7 +175,7 @@ const Home = () => {
         title={`Our Working Process `}
         title2={`Instantly link Machinara to your machine sensors.`}
       />
-      <WorkingProcess className={`pt-12 md:pt-20`} />
+      <WorkingProcess className={`pt-12 md:pt-10`} />
       <TitleContent
         className={`max-w-[473px]!`}
         title={`Team`}
@@ -187,7 +187,7 @@ const Home = () => {
         title={`Testimonials`}
         title2={`Hear from industry leaders who trust Machinara to eliminate downtime.`}
       />
-      <Testimonial id="testimoni" className={`pt-14 md:pt-20`} />
+      <Testimonial id="testimoni" className={`pt-14 md:pt-10`} />
       <TitleContent
         className={`max-w-[323px]!`}
         title={`Contact Us`}

@@ -20,17 +20,14 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-// --- API CONFIG ---
 const API_URL = "https://backend-dev-service.up.railway.app/api/tickets";
 
-// --- HELPER: Format Tanggal ---
 const formatDate = (dateString) => {
   if (!dateString) return "-";
   const options = { weekday: "short", day: "numeric", month: "short" };
   return new Date(dateString).toLocaleDateString("en-US", options);
 };
 
-// --- HELPER: Bandingkan Tanggal (Abaikan Jam) ---
 const isSameDay = (d1, d2) => {
   if (!d1 || !d2) return false;
   return (
@@ -40,9 +37,8 @@ const isSameDay = (d1, d2) => {
   );
 };
 
-// --- HELPER: Mapping Priority ---
 const getStatusStyle = (priority) => {
-  const p = priority ? priority.toLowerCase() : "medium"; // Default medium
+  const p = priority ? priority.toLowerCase() : "medium"; 
   if (p === "high" || p === "critical")
     return {
       style: "bg-red-100 text-red-600",
@@ -71,7 +67,6 @@ const StatusIcon = ({ priority }) => {
   );
 };
 
-// --- ITEM COMPONENT ---
 const MaintenanceItem = ({ item }) => {
   const { colorText } = getStatusStyle(item.priority);
 
@@ -111,40 +106,34 @@ const MaintenanceItem = ({ item }) => {
   );
 };
 
-// --- MAIN COMPONENT ---
 const ScheduledMaintenance = ({ selectedDate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [maintenanceData, setMaintenanceData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // --- 1. FETCH & MAP DATA ---
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(API_URL, {
-          headers: { Authorization: `Bearer ${token}` }, // Opsional jika butuh token
+          headers: { Authorization: `Bearer ${token}` }, 
         });
 
         const json = await response.json();
         const rawData = Array.isArray(json) ? json : json.data || [];
 
-        // Map data API ke format UI & Pastikan Format Date Benar
         const mappedData = rawData.map((ticket) => ({
           id: ticket.id,
-          title: ticket.issue, // API: issue -> UI: title
-          machineId: ticket.machine_name, // API: machine_name -> UI: machineId
-          // Prioritaskan date (input user), fallback ke createdAt
+          title: ticket.issue, 
+          machineId: ticket.machine_name,         
           date: new Date(ticket.date || ticket.createdAt),
-          priority: ticket.priority || "Medium", // Default jika API tidak kirim priority
+          priority: ticket.priority || "Medium", 
           status: ticket.status || "Open",
-          isAuto: false, // Default manual
+          isAuto: false, 
         }));
 
-        // --- PERBAIKAN DI SINI ---
-        // Sort by Date (Terbaru/Paling Besar ke Terlama) -> DESCENDING
         mappedData.sort((a, b) => b.date - a.date);
 
         setMaintenanceData(mappedData);
@@ -158,14 +147,10 @@ const ScheduledMaintenance = ({ selectedDate }) => {
     fetchData();
   }, []);
 
-  // --- 2. FILTER LOGIC (UTAMA) ---
-
-  // Filter untuk Tampilan Utama (Dashboard Card)
   const dashboardData = selectedDate
     ? maintenanceData.filter((item) => isSameDay(item.date, selectedDate))
     : maintenanceData;
 
-  // Filter untuk Modal (Search Bar) - Tidak dipengaruhi tanggal
   const modalData = maintenanceData.filter(
     (item) =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -174,7 +159,6 @@ const ScheduledMaintenance = ({ selectedDate }) => {
 
   return (
     <>
-      {/* === DASHBOARD CARD (FILTERED BY DATE) === */}
       <Card className="rounded-2xl shadow-md h-full bg-white border-none flex flex-col">
         <CardHeader className="flex flex-col space-y-1 pb-4 border-b border-gray-100">
           <div className="flex flex-row items-center w-full justify-between">
@@ -190,7 +174,6 @@ const ScheduledMaintenance = ({ selectedDate }) => {
               View All
             </Button>
           </div>
-          {/* Subtitle Tanggal yang Dipilih */}
           <p className="text-xs text-gray-500 font-medium">
             Showing for:{" "}
             <span className="text-gray-800 font-bold">
@@ -221,8 +204,6 @@ const ScheduledMaintenance = ({ selectedDate }) => {
           )}
         </CardContent>
       </Card>
-
-      {/* === MODAL VIEW ALL (SEARCHABLE) === */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="sm:max-w-2xl max-h-[85vh] flex flex-col bg-white">
           <DialogHeader>

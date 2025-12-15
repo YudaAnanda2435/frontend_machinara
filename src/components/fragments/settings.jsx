@@ -59,12 +59,10 @@ const DashboardSettings = () => {
 
   const closeModal = () => {
     setModalConfig((prev) => ({ ...prev, isOpen: false }));
-    // Jika sukses update, reload halaman agar fresh
     if (modalConfig.type === "success") {
       window.location.reload();
     }
   };
-
   const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -77,7 +75,6 @@ const DashboardSettings = () => {
     };
   };
 
-  // --- LOAD DATA DARI LOCAL STORAGE ---
   useEffect(() => {
     try {
       const storedUserData = localStorage.getItem("user_data");
@@ -94,7 +91,7 @@ const DashboardSettings = () => {
       setFormData({
         name: localUserObj.name || "",
         phone: localUserObj.phone || "",
-        biography: localUserObj.biography || "", // Pasti muncul sekarang!
+        biography: localUserObj.biography || "",
         password: "",
       });
     } catch (error) {
@@ -139,7 +136,6 @@ const DashboardSettings = () => {
       const result = await response.json();
       const updatedUserObj = result.user || result.data || result;
 
-      // UPDATE LOCAL STORAGE
       const oldStorage = JSON.parse(localStorage.getItem("user_data") || "{}");
       const newStorageData = { ...oldStorage, ...updatedUserObj };
       localStorage.setItem("user_data", JSON.stringify(newStorageData));

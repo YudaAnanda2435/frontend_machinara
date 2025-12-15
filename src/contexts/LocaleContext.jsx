@@ -6,8 +6,6 @@ export const LocaleProvider = ({ children }) => {
     locale,
     setLocale,
   };
-
-  // 5. Render Provider bawaan React dan teruskan 'value' Anda
   return (
     <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
   );

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ImageContact from "../../assets/img/imageContact.png";
 
-// Component untuk Radio Button Group
 const FormTypeSelector = ({ formType, setFormType }) => {
   return (
     <div className="flex gap-6 ">
@@ -31,7 +30,6 @@ const FormTypeSelector = ({ formType, setFormType }) => {
   );
 };
 
-// Component untuk Input Field
 const InputField = ({
   label,
   name,
@@ -59,7 +57,6 @@ const InputField = ({
   );
 };
 
-// Component untuk Textarea Field
 const TextareaField = ({
   label,
   name,
@@ -87,7 +84,6 @@ const TextareaField = ({
   );
 };
 
-// Component untuk Submit Button
 const SubmitButton = ({ onClick, text = "Send Message" }) => {
   return (
     <button
@@ -99,7 +95,6 @@ const SubmitButton = ({ onClick, text = "Send Message" }) => {
   );
 };
 
-// Component untuk Sunburst Rays
 const SunburstRays = () => {
   return (
     <div className="absolute inset-0 flex items-center justify-center">
@@ -118,11 +113,6 @@ const SunburstRays = () => {
   );
 };
 
-// Component untuk Gear Logo
-
-// Component untuk Logo Section (gabungan SunburstRays dan GearLogo)
-
-// Component untuk Contact Form Section
 const ContactFormSection = ({
   formType,
   setFormType,
@@ -168,7 +158,6 @@ const ContactFormSection = ({
   );
 };
 
-// Main Contact Component
 const Contact = ({id}) => {
   const [formType, setFormType] = useState("sayHi");
   const [formData, setFormData] = useState({
@@ -191,7 +180,7 @@ const Contact = ({id}) => {
   };
 
   return (
-    <section id={`${id}` } className="container-main pb-[137px] pt-10 md:pt-[140px]">
+    <section id={`${id}` } className="container-main pb-[137px] pt-10 ">
       <div className=" mx-auto">
         <div className="flex flex-col md:flex-row justify-between gap-12 items-center">
           <ContactFormSection
@@ -202,7 +191,6 @@ const Contact = ({id}) => {
             handleSubmit={handleSubmit}
           />
           <img src={ImageContact} alt="" className="hidden lg:flex" />
-          {/* <LogoSection /> */}
         </div>
       </div>
     </section>

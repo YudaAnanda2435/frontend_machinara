@@ -1,14 +1,11 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
-// Tidak perlu useRef untuk wrapper lagi
 const SmoothScroll = ({ children }) => {
   useEffect(() => {
-    // Inisialisasi Lenis TANPA opsi wrapper/content
-    // Lenis otomatis akan nempel ke window
     const lenis = new Lenis({
-      duration: 1.2, // Atur durasi sesuai selera (biasanya 1.2 enak)
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing default Lenis yang smooth
+      duration: 1.2, 
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
     });
 
@@ -23,8 +20,6 @@ const SmoothScroll = ({ children }) => {
       lenis.destroy();
     };
   }, []);
-
-  // Kembalikan children tanpa div wrapper khusus, atau pakai fragment
   return <>{children}</>;
 };
 

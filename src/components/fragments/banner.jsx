@@ -14,10 +14,10 @@ const Banner = () => {
               Book a demo today to see how Machinara’s AI can help your factory
               run without interruption and reduce maintenance costs.
             </p>
-            <Buttons
+            {/* <Buttons
               className={"buttonAnimate w-fit"} 
               text={`Get your free proposal`}
-            />
+            /> */}
           </div>
           <img className="lg:mr-[135px]" src={ImgBanner} alt="" />
         </div>

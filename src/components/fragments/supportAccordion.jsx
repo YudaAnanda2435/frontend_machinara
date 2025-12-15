@@ -43,12 +43,11 @@ const processData = [
   },
 ];
 
-// Ini adalah komponen untuk SATU item accordion
+// komponen accordion
 const AccordionItem = ({ item, isOpen, toggleItem }) => {
   const { id, title, description } = item;
 
   return (
-    // Terapkan kelas kondisional: --open atau --closed
     <div
       onClick={() => toggleItem(id)}
       className={`accordion-item-support ${
@@ -57,14 +56,10 @@ const AccordionItem = ({ item, isOpen, toggleItem }) => {
           : "accordion-item-support--closed"
       }`}
     >
-      {/* Header */}
       <div className="accordion-item-support__header">
         <div className="accordion-item-support__trigger">
-          {/* Hapus Nomor, langsung Judul */}
           <h3 className="accordion-item-support__title">{title}</h3>
         </div>
-
-        {/* Icon Wrapper Khusus Support */}
         <div className="accordion-item-support__icon-wrapper">
           <div className="accordion-icon">
             <div className="accordion-icon__bar"></div>
@@ -72,8 +67,6 @@ const AccordionItem = ({ item, isOpen, toggleItem }) => {
           </div>
         </div>
       </div>
-
-      {/* Panel Konten */}
       <div className="accordion-item-support__panel">
         <div className="accordion-item-support__panel-content">
           <p>{description}</p>
@@ -83,23 +76,16 @@ const AccordionItem = ({ item, isOpen, toggleItem }) => {
   );
 };
 
-// Ini adalah komponen UTAMA Anda
 const AccordionSupport = ({ className }) => {
-  // State untuk melacak item mana yang terbuka. Default "01".
   const [openItem, setOpenItem] = useState("01");
 
-  // Fungsi untuk mengubah item yang terbuka
   const toggleItem = (id) => {
-    // Jika item yang sama diklik, tutup (set ke null)
-    // Jika item berbeda diklik, buka item itu
     setOpenItem(openItem === id ? null : id);
   };
 
   return (
     <section className={`font-roboto gap-5 flex flex-col mb-16 ${className}`}>
-      {/* Gunakan wrapper dari CSS */}{" "}
       <div className="accordion-wrapper-support">
-        {/* Loop data dan render setiap item */}{" "}
         {processData.map((item) => (
           <AccordionItem
             key={item.id}

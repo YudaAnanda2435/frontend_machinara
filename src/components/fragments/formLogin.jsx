@@ -13,8 +13,6 @@ import {
 } from "@/components/ui/dialog";
 
 const LOGIN_URL = "https://backend-dev-service.up.railway.app/auth/login";
-
-// --- FUNGSI DECODE (Hanya untuk backup/pengecekan role) ---
 const parseJwt = (token) => {
   try {
     const base64Url = token.split(".")[1];
@@ -86,39 +84,24 @@ const FormLogin = () => {
       const token = data.token;
       if (!token) throw new Error("Token tidak diterima dari server.");
 
-      // 1. Simpan Token
       localStorage.setItem("token", token);
-
-      // --- PERBAIKAN UTAMA DISINI ---
-      // Jangan ambil dari parseJwt(token) karena biografi tidak ada di token.
-      // Ambil dari data.user (atau data.data) yang dikirim backend.
 
       const userDataLengkap = data.user || data.data;
 
-      // Backup: Kalau backend ga kirim object user, baru pake token (tapi bio bakal kosong)
       const finalUserToSave = userDataLengkap || parseJwt(token);
 
       console.log("Menyimpan Data User Lengkap:", finalUserToSave);
 
       localStorage.setItem("user_data", JSON.stringify(finalUserToSave));
-      // -----------------------------
-
-      // 3. SIAPKAN LOGIKA PENGECEKAN
-      const decodedToken = parseJwt(token); // Decode cuma buat cek role/exp
+      const decodedToken = parseJwt(token); 
       const role =
         finalUserToSave?.role?.toLowerCase() || decodedToken?.role || "user";
       const phone = finalUserToSave?.phone || phoneInput;
-
-      // --- DEBUGGING MESSAGE ---
       const info = `Role: ${role} | Bio: ${
         finalUserToSave?.biography || "Kosong"
       }`;
       setDebugInfo(info);
-
-      // 4. Buka Modal Sukses
       setIsSuccessModalOpen(true);
-
-      // 5. REDIRECT BERDASARKAN HASIL PENGECEKAN
       setTimeout(() => {
         if (role.includes("admin") || phone === "081234567890") {
           window.location.href = "/admin";
@@ -142,7 +125,7 @@ const FormLogin = () => {
           <Form
             label="Nomor HP"
             type="tel"
-            placeholder="08123456789"
+            placeholder="Enter your number"
             name="phoneNumber"
             ref={phoneRef}
           />

@@ -7,9 +7,10 @@ const CaseStudyCards = ({ className}) => {
       <div className="flex w-full flex-col md:flex-row justify-between gap-4 bg-primary p-10 px-[30px] md:py-[70px] md:px-[60px] rounded-[45px] items-stretch">
         <div className="w-full md:max-w-[286px] gap-5 flex flex-col">
           <p className="text-white">
-            For a textile manufacturer, Machinara's anomaly detection identified
-            overheating issues weeks in advance, extending machine lifespan by 2
-            years and cutting energy costs by 10%.
+            For a major automotive parts manufacturer, Machinara's real-time
+            vibration analysis detected a critical spindle fault weeks in
+            advance, preventing an estimated 48 hours of unexpected downtime and
+            saving over $120,000 in emergency repair costs.
           </p>
           <Buttons
             className="p-0! bg-transparent text-white border-0"
@@ -22,9 +23,10 @@ const CaseStudyCards = ({ className}) => {
 
         <div className="w-full md:max-w-[286px] gap-5 flex flex-col">
           <p className="text-white">
-            For a leading automotive plant, we implemented real-time vibration
-            analysis that resulted in a 40% reduction in unexpected downtime and
-            saved over $50,000 in emergency repairs.
+            For a large-scale bottling facility, our AI-based temperature
+            monitoring identified early signs of overheating in conveyor motors,
+            enabling planned interventions that significantly improved Overall
+            Equipment Effectiveness (OEE) by 18%.
           </p>
           <Buttons
             className="p-0! bg-transparent text-white border-0"
@@ -37,9 +39,10 @@ const CaseStudyCards = ({ className}) => {
 
         <div className="w-full md:max-w-[286px] gap-5 flex flex-col">
           <p className="text-white">
-            For a large-scale bottling facility, our AI detected early signs of
-            motor failure, allowing for planned maintenance that prevented a
-            production halt and increased OEE by 15%.
+            For a regional steel processing plant, Machinara’s anomaly detection
+            algorithm spotted irregular hydraulic pressure patterns, enabling
+            preventive maintenance that extended the main press's operational
+            lifespan by 3 years and cut energy consumption by 12%.
           </p>
           <Buttons
             className="p-0! bg-transparent text-white border-0"

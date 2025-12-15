@@ -1,4 +1,3 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Buttons from "../button/index";
 
 const NavigationItem = ({ icon, text, isActive }) => {
@@ -13,11 +12,9 @@ const NavigationItem = ({ icon, text, isActive }) => {
       <img src={icon} alt="" className={`w-5 h-5 `} />
       <Buttons
         className={`bg-transparent! border-0! p-0!`}
-        // hoverBg="!bg-transparent"
         justify="justify-start"
         text={text}
         padding="!p-0"
-        // className={contentClasses}
       />
     </div>
   );

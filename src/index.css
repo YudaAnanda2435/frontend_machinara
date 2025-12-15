@@ -152,12 +152,10 @@ body {
     @apply grid-rows-[1fr] opacity-100;
   }
 
-  /* 3. Wrapper konten BARU (Grid Item) */
   .accordion-item__panel-content {
     @apply overflow-hidden;
   }
 
-  /* --- AKHIR PERUBAHAN KE GRID --- */
   .accordion-item__panel p {
     @apply transition-colors duration-300 ease-out;
     @apply pt-6 md:pt-[30px];
@@ -237,12 +235,10 @@ body {
   @apply rotate-90;
 }
 
-/* Saat Terbuka: Putar bar vertikal jadi datar */
 .accordion-item-support--open .accordion-icon__bar:last-child {
   @apply rotate-0;
 }
 
-/* 4. Panel Konten (Animasi Buka Tutup) */
 .accordion-item-support__panel {
   @apply grid grid-rows-[0fr] opacity-0 
     transition-all duration-300 ease-out;
@@ -252,12 +248,10 @@ body {
   @apply grid-rows-[1fr] opacity-100 mt-3; 
 }
 
-/* Isi Konten Text */
 .accordion-item-support__panel-content {
   @apply overflow-hidden text-gray-600 text-[16px] leading-relaxed;
 }
 
-  /* card profile name */
   .profile-card {
     @apply  shadow-[0_5px_0_#191A23] flex flex-col gap-7 px-6 py-7 w-full md:px-[35px] md:py-10 border border-gray-950 rounded-[45px];
   }
