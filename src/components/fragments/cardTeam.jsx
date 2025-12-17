@@ -18,7 +18,7 @@ const CardTeam = () => {
       <div className="profile-card group">
         <div className="profile-card__header ">
           <img
-            className="profile-card__avatar grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
+            className="profile-card__avatar sm:grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
             src={Rasyid}
             alt=""
           />
@@ -46,7 +46,7 @@ const CardTeam = () => {
       <div className="profile-card group">
         <div className="profile-card__header ">
           <img
-            className="profile-card__avatar grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
+            className="profile-card__avatar sm:grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
             src={Erwin}
             alt=""
           />
@@ -74,7 +74,7 @@ const CardTeam = () => {
       <div className="profile-card group">
         <div className="profile-card__header ">
           <img
-            className="profile-card__avatar grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
+            className="profile-card__avatar sm:grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
             src={Reinhand}
             alt=""
           />
@@ -101,7 +101,7 @@ const CardTeam = () => {
       <div className="profile-card group">
         <div className="profile-card__header ">
           <img
-            className="profile-card__avatar grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
+            className="profile-card__avatar sm:grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
             src={Yuda}
             alt=""
           />
@@ -128,7 +128,7 @@ const CardTeam = () => {
       <div className="profile-card group">
         <div className="profile-card__header ">
           <img
-            className="profile-card__avatar grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
+            className="profile-card__avatar sm:grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500 ease-in-out"
             src={Jesika}
             alt=""
           />

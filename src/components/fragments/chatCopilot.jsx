@@ -81,15 +81,26 @@ export const ChatCopilot = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
   }, [messages]);
 
-  // Lock scroll body saat chat terbuka
+  // --- SCROLL LOCKING LOGIC (PERBAIKAN UTAMA) ---
   useEffect(() => {
     if (isOpen) {
+      // 1. Kunci Scroll Body
       document.body.style.overflow = "hidden";
+      // 2. Tambahan untuk Mobile (iOS/Safari) agar tidak bounce
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
     } else {
+      // Restore
       document.body.style.overflow = "auto";
+      document.body.style.position = "";
+      document.body.style.width = "";
     }
+
     return () => {
+      // Cleanup saat unmount
       document.body.style.overflow = "auto";
+      document.body.style.position = "";
+      document.body.style.width = "";
     };
   }, [isOpen]);
 
@@ -162,7 +173,7 @@ export const ChatCopilot = () => {
 
   return (
     <>
-      {/* Overlay Gelap */}
+      {/* Overlay Gelap (Mencegah klik ke belakang & visual fokus) */}
       {isOpen && (
         <div
           className="fixed font-roboto inset-0 z-50 bg-black/30 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in-0"
@@ -191,11 +202,14 @@ export const ChatCopilot = () => {
       {isOpen && (
         <div
           ref={popoverRef}
-          className="fixed bottom-[106px] right-8 z-60 w-[320px] sm:w-[400px] md:w-[450px] rounded-2xl shadow-2xl border border-gray-200 bg-white chat-popover-tail flex flex-col overflow-hidden max-h-[80vh]"
+          className="fixed bottom-[100px] right-4 sm:right-8 z-50 w-[90vw] sm:w-[400px] md:w-[450px] rounded-2xl shadow-2xl border border-gray-200 bg-white chat-popover-tail flex flex-col overflow-hidden max-h-[80vh]"
+          // Stop propagation agar scroll di dalam chat tidak nembus ke body
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
         >
-          <div className="flex flex-col h-[500px]">
+          <div className="flex flex-col h-[500px] max-h-[80vh]">
             {/* HEADER */}
-            <div className="flex items-center justify-between p-4 border-b bg-gray-50">
+            <div className="flex items-center justify-between p-4 border-b bg-gray-50 shrink-0">
               <div className="flex items-center gap-3">
                 <CopilotLogo />
                 <span className="font-roboto text-lg font-semibold text-gray-800">
@@ -224,10 +238,10 @@ export const ChatCopilot = () => {
               </div>
             </div>
 
-            {/* BODY */}
+            {/* BODY (Scrollable Area) */}
             <div
               ref={chatBodyRef}
-              className="flex-1 p-4 overflow-y-auto flex flex-col gap-4 bg-white"
+              className="flex-1 p-4 overflow-y-auto flex flex-col gap-4 bg-white overscroll-contain"
             >
               {messages.map((message) => (
                 <div
@@ -248,9 +262,9 @@ export const ChatCopilot = () => {
                     </div>
                   )}
                   <div
-                    className={`p-3 rounded-2xl text-sm leading-relaxed ${
+                    className={`p-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
                       message.sender === "user"
-                        ? "bg-blue-600 text-white! rounded-br-none"
+                        ? "bg-blue-600 text-white rounded-br-none"
                         : "bg-gray-100 text-gray-800 rounded-bl-none"
                     }`}
                   >
@@ -276,8 +290,11 @@ export const ChatCopilot = () => {
               )}
             </div>
 
-            {/* FOOTER */}
-            <form onSubmit={handleSend} className="p-4 border-t bg-white">
+            {/* FOOTER (Input Area) */}
+            <form
+              onSubmit={handleSend}
+              className="p-4 border-t bg-white shrink-0"
+            >
               <div className="relative">
                 <input
                   placeholder="Ask about machine health..."
@@ -310,7 +327,7 @@ export const ChatCopilot = () => {
 
       {/* --- MODAL DIALOG HAPUS --- */}
       <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-        <DialogContent className="sm:max-w-md bg-white border-l-4 z-90 border-red-500">
+        <DialogContent className="sm:max-w-md bg-white border-l-4 z-[60] border-red-500">
           <DialogHeader className="flex flex-col items-center text-center gap-2">
             <div className="h-14 w-14 bg-red-100 rounded-full flex items-center justify-center mb-2">
               <AlertTriangle className="h-8 w-8 text-red-600" />

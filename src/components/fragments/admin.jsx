@@ -109,26 +109,65 @@ const Admin = () => {
     fetchUsers();
   }, []);
 
-  // --- 2. HANDLE INPUT ---
+  // --- 2. HANDLE INPUT (DENGAN VALIDASI ANGKA) ---
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    // VALIDASI: Khusus Phone hanya boleh angka
+    if (name === "phone") {
+      // Regex replace semua karakter selain angka (\D) dengan string kosong
+      const numericValue = value.replace(/\D/g, "");
+      setFormData({ ...formData, [name]: numericValue });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  // --- 3. SUBMIT (CREATE & UPDATE) ---
   // --- 3. SUBMIT (CREATE & UPDATE) ---
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // VALIDASI 1: Cek field kosong standar
     if (!formData.name || !formData.phone) {
       showAlert("Validasi Gagal", "Nama dan Nomor HP wajib diisi!", "error");
       return;
     }
 
-    if (!isEditing && !formData.password) {
+    // VALIDASI 2: Cek panjang Nomor HP (Minimal 10 angka)
+    if (formData.phone.length < 10) {
       showAlert(
         "Validasi Gagal",
-        "Password wajib diisi untuk pengguna baru!",
+        "Nomor HP harus terdiri dari minimal 10 angka!",
+        "error"
+      );
+      return;
+    }
+
+    // VALIDASI 3: Cek Password untuk User Baru
+    if (!isEditing) {
+      if (!formData.password) {
+        showAlert(
+          "Validasi Gagal",
+          "Password wajib diisi untuk pengguna baru!",
+          "error"
+        );
+        return;
+      }
+      if (formData.password.length < 4) {
+        showAlert(
+          "Validasi Gagal",
+          "Password minimal harus 4 karakter!",
+          "error"
+        );
+        return;
+      }
+    }
+
+    // VALIDASI 4: Cek Password saat Edit (Jika diisi)
+    if (isEditing && formData.password && formData.password.length < 4) {
+      showAlert(
+        "Validasi Gagal",
+        "Password baru minimal harus 4 karakter!",
         "error"
       );
       return;
@@ -140,7 +179,7 @@ const Admin = () => {
     setIsLoading(true);
     try {
       if (isEditing) {
-        // --- LOGIC EDIT (Tetap sama) ---
+        // --- LOGIC EDIT ---
         const updatePayload = {
           name: formData.name,
           biography: formData.biography || "Pegawai",
@@ -160,14 +199,12 @@ const Admin = () => {
 
         showAlert("Berhasil", "Data pegawai berhasil diperbarui!", "success");
       } else {
-        // --- LOGIC CREATE (DIPERBAIKI) ---
-
-        // 1. Masukkan biography ke payload awal (Coba kirim langsung)
+        // --- LOGIC CREATE ---
         const createPayload = {
           name: formData.name,
           phone: formData.phone,
           password: formData.password,
-          biography: formData.biography || "Pegawai", // Tambahkan ini
+          biography: formData.biography || "Pegawai",
         };
 
         const createResponse = await fetch(`${BASE_URL}/create-account`, {
@@ -183,12 +220,6 @@ const Admin = () => {
         }
 
         // --- STEP 2: UPDATE BIO (JAGA-JAGA) ---
-        // Jika Backend Anda di endpoint /create-account mengabaikan field biography,
-        // Kita lakukan update manual. TAPI, kita pakai ID dari response createResult
-        // supaya lebih akurat & cepat daripada fetch semua user.
-
-        // Cek apakah createResult mengembalikan data user baru beserta ID-nya?
-        // Biasanya formatnya: { message: "...", data: { id: 123, ... } }
         const newUserId =
           createResult.data?.id || createResult.user?.id || createResult.id;
 
@@ -198,7 +229,6 @@ const Admin = () => {
             biography: formData.biography,
           };
 
-          // Langsung tembak endpoint update user by ID
           await fetch(`${BASE_URL}/users/${newUserId}`, {
             method: "PUT",
             headers: headers,
@@ -333,7 +363,7 @@ const Admin = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="081234567890"
+                    placeholder="enter number here"
                     className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black/20 ${
                       isEditing ? "bg-gray-100 text-gray-500" : ""
                     }`}
@@ -343,6 +373,11 @@ const Admin = () => {
                   {isEditing && (
                     <p className="text-xs text-gray-400 mt-1">
                       *ID Login tidak dapat diubah
+                    </p>
+                  )}
+                  {!isEditing && (
+                    <p className="text-xs text-gray-400 mt-1">
+                      *Hanya angka, minimal 10 digit
                     </p>
                   )}
                 </div>
@@ -374,6 +409,11 @@ const Admin = () => {
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black/20"
                     disabled={isLoading}
                   />
+                  {!isEditing && (
+                    <p className="text-xs text-gray-400 mt-1">
+                      *Minimal 4 karakter
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex gap-2 mt-2">

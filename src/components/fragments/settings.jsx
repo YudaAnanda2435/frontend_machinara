@@ -63,6 +63,7 @@ const DashboardSettings = () => {
       window.location.reload();
     }
   };
+
   const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -107,6 +108,17 @@ const DashboardSettings = () => {
   const handleSave = async () => {
     const headers = getAuthHeaders();
     if (!headers) return;
+
+    // --- VALIDASI PASSWORD ---
+    // Jika password diisi, cek panjangnya minimal 4 karakter
+    if (formData.password && formData.password.length < 4) {
+      showModal(
+        "error",
+        "Validation Failed",
+        "Password must be at least 4 characters long."
+      );
+      return; // Stop proses, jangan lanjut ke fetch
+    }
 
     setIsLoading(true);
 

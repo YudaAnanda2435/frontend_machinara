@@ -131,7 +131,7 @@ const HomeNavbar = () => {
                 <Buttons
                   className="text-black w-full text-left"
                   background="bg-transparent"
-                  text="Request a quote"
+                  text="Login"
                 />
               </Link>
             </li>
