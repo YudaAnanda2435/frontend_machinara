@@ -113,9 +113,7 @@ const Admin = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // VALIDASI: Khusus Phone hanya boleh angka
     if (name === "phone") {
-      // Regex replace semua karakter selain angka (\D) dengan string kosong
       const numericValue = value.replace(/\D/g, "");
       setFormData({ ...formData, [name]: numericValue });
     } else {
@@ -123,7 +121,6 @@ const Admin = () => {
     }
   };
 
-  // --- 3. SUBMIT (CREATE & UPDATE) ---
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -179,7 +176,6 @@ const Admin = () => {
     setIsLoading(true);
     try {
       if (isEditing) {
-        // --- LOGIC EDIT ---
         const updatePayload = {
           name: formData.name,
           biography: formData.biography || "Pegawai",
@@ -199,7 +195,6 @@ const Admin = () => {
 
         showAlert("Berhasil", "Data pegawai berhasil diperbarui!", "success");
       } else {
-        // --- LOGIC CREATE ---
         const createPayload = {
           name: formData.name,
           phone: formData.phone,
@@ -219,7 +214,7 @@ const Admin = () => {
           throw new Error(createResult.message || "Gagal membuat akun");
         }
 
-        // --- STEP 2: UPDATE BIO (JAGA-JAGA) ---
+        // --- STEP 2: UPDATE BIO ---
         const newUserId =
           createResult.data?.id || createResult.user?.id || createResult.id;
 

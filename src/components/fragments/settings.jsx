@@ -117,7 +117,7 @@ const DashboardSettings = () => {
         "Validation Failed",
         "Password must be at least 4 characters long."
       );
-      return; // Stop proses, jangan lanjut ke fetch
+      return; 
     }
 
     setIsLoading(true);

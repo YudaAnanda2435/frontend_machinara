@@ -66,13 +66,8 @@ export const ChatCopilot = () => {
   const [rotate, setRotate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId] = useState("testing-user-001");
-
-  // State untuk Modal Hapus
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  // --- EFFECTS ---
-
-  // Simpan ke Storage tiap ada pesan baru
   useEffect(() => {
     const dataToSave = {
       messages: messages,
@@ -81,30 +76,24 @@ export const ChatCopilot = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
   }, [messages]);
 
-  // --- SCROLL LOCKING LOGIC (PERBAIKAN UTAMA) ---
   useEffect(() => {
     if (isOpen) {
-      // 1. Kunci Scroll Body
       document.body.style.overflow = "hidden";
-      // 2. Tambahan untuk Mobile (iOS/Safari) agar tidak bounce
       document.body.style.position = "fixed";
       document.body.style.width = "100%";
     } else {
-      // Restore
       document.body.style.overflow = "auto";
       document.body.style.position = "";
       document.body.style.width = "";
     }
 
     return () => {
-      // Cleanup saat unmount
       document.body.style.overflow = "auto";
       document.body.style.position = "";
       document.body.style.width = "";
     };
   }, [isOpen]);
 
-  // Auto scroll ke bawah
   useEffect(() => {
     if (chatBodyRef.current) {
       chatBodyRef.current.scrollTo({
@@ -114,21 +103,16 @@ export const ChatCopilot = () => {
     }
   }, [messages, isLoading]);
 
-  // --- HANDLERS ---
-
-  // Buka Modal Hapus
   const handleDeleteClick = () => {
     setIsDeleteModalOpen(true);
   };
 
-  // Konfirmasi Hapus
   const confirmDelete = () => {
     setMessages([initialMessage]);
     localStorage.removeItem(STORAGE_KEY);
     setIsDeleteModalOpen(false);
   };
 
-  // Kirim Pesan ke API
   const handleSend = async (e) => {
     e.preventDefault();
     const text = inputText.trim();
@@ -173,7 +157,6 @@ export const ChatCopilot = () => {
 
   return (
     <>
-      {/* Overlay Gelap (Mencegah klik ke belakang & visual fokus) */}
       {isOpen && (
         <div
           className="fixed font-roboto inset-0 z-50 bg-black/30 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in-0"
@@ -182,7 +165,6 @@ export const ChatCopilot = () => {
         />
       )}
 
-      {/* Tombol Trigger (Kanan Bawah) */}
       <div className="bg-[#F4F4F4] z-50 flex items-center shadow-xl rounded-full flex-row h-10 fixed bottom-6 right-8">
         <p className="hidden font-roboto relative md:block text-[12px] font-semibold p-4 text-black">
           CHAT WITH AI
@@ -198,17 +180,14 @@ export const ChatCopilot = () => {
         </button>
       </div>
 
-      {/* Jendela Chat */}
       {isOpen && (
         <div
           ref={popoverRef}
           className="fixed bottom-[100px] right-4 sm:right-8 z-50 w-[90vw] sm:w-[400px] md:w-[450px] rounded-2xl shadow-2xl border border-gray-200 bg-white chat-popover-tail flex flex-col overflow-hidden max-h-[80vh]"
-          // Stop propagation agar scroll di dalam chat tidak nembus ke body
           onWheel={(e) => e.stopPropagation()}
           onTouchMove={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col h-[500px] max-h-[80vh]">
-            {/* HEADER */}
             <div className="flex items-center justify-between p-4 border-b bg-gray-50 shrink-0">
               <div className="flex items-center gap-3">
                 <CopilotLogo />
@@ -217,9 +196,7 @@ export const ChatCopilot = () => {
                 </span>
               </div>
 
-              {/* TOMBOL AKSI HEADER (DELETE & CLOSE) */}
               <div className="flex items-center gap-1">
-                {/* 1. Tombol Hapus */}
                 <button
                   onClick={handleDeleteClick}
                   className="p-2 rounded-full hover:bg-red-100 hover:text-red-600 text-gray-500 transition-colors"
@@ -228,7 +205,6 @@ export const ChatCopilot = () => {
                   <Trash2 className="h-5 w-5" />
                 </button>
 
-                {/* 2. Tombol Close */}
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2 rounded-full hover:bg-gray-200 transition-colors"
@@ -238,7 +214,6 @@ export const ChatCopilot = () => {
               </div>
             </div>
 
-            {/* BODY (Scrollable Area) */}
             <div
               ref={chatBodyRef}
               className="flex-1 p-4 overflow-y-auto flex flex-col gap-4 bg-white overscroll-contain"
@@ -258,13 +233,13 @@ export const ChatCopilot = () => {
                     </div>
                   ) : (
                     <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
-                      <MessageSquare className="h-5 w-5 text-blue-600" />
+                      <MessageSquare className="h-5 w-5 text-primary" />
                     </div>
                   )}
                   <div
                     className={`p-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
                       message.sender === "user"
-                        ? "bg-blue-600 text-white rounded-br-none"
+                        ? "bg-primary text-white rounded-br-none"
                         : "bg-gray-100 text-gray-800 rounded-bl-none"
                     }`}
                   >
@@ -327,7 +302,7 @@ export const ChatCopilot = () => {
 
       {/* --- MODAL DIALOG HAPUS --- */}
       <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-        <DialogContent className="sm:max-w-md bg-white border-l-4 z-[60] border-red-500">
+        <DialogContent className="sm:max-w-md bg-white border-l-4 z-60 border-red-500">
           <DialogHeader className="flex flex-col items-center text-center gap-2">
             <div className="h-14 w-14 bg-red-100 rounded-full flex items-center justify-center mb-2">
               <AlertTriangle className="h-8 w-8 text-red-600" />
